@@ -1,5 +1,5 @@
 {
-  "name": "effectshop",
+  "name": "effectshop-front",
   "private": true,
   "scripts": {
     "dev": "next dev",
