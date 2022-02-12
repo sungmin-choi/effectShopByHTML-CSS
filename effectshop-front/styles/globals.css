@@ -12,5 +12,7 @@ a {
 }
 
 * {
+  font-family: 'Mochiy Pop P One', sans-serif;
+  font-family: 'Rowdies', cursive;
   box-sizing: border-box;
 }
