@@ -1,22 +1,22 @@
 import React from 'react'
-import { Card } from 'antd';
 import styled from 'styled-components';
 import dummyData from '../dummyData';
 import Item from './Item';
-const EffectCard = styled(Card)`
-    width: 600px;
-    height: 400px;
-    display: inline-block;
-    margin: 10px;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin:15px;
+  padding-bottom: 2rem;
 `
 
+//{dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
 const Items = () => {
   return (
-    <div style={{textAlign:'center'}}>
+    <Container>
       {dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
-      {dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
-    </div>
+    </Container>
   )
 }
 

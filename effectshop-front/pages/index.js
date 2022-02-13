@@ -13,10 +13,9 @@ export default function Home() {
       <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Rowdies:wght@700&display=swap" rel="stylesheet"/>
     </Head>
     <Header />
-    <section style={{margin:'auto'}}>
+    <section>
       <Items />
     </section>
-
     </>
   )
 }

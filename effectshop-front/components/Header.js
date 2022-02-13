@@ -9,7 +9,7 @@ const HeaderWrapper = styled.header`
   font-family: 'Rowdies', cursive;
   text-align: center;
   .headerTitle{
-    color: #ACC7B4;
+    color: #303952;
     font-size: 3rem;
   }
   
