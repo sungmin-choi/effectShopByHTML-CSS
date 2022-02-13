@@ -9,7 +9,7 @@ const HeaderWrapper = styled.header`
   font-family: 'Rowdies', cursive;
   text-align: center;
   .headerTitle{
-    color: #303952;
+    color: #ACC7B4;
     font-size: 3rem;
   }
   
@@ -23,7 +23,7 @@ const HeaderWrapper = styled.header`
       font-size: 2rem;
     }
   }
-  
+
 `
 
 const Header = () => {
