@@ -13,11 +13,7 @@ const item1={
     .Button_box {
       text-align: center;
       margin-top: 20%;
-    }
-    .button {
-      width: 100px;
-      height: 60px;
-      border: 1px solid #63cdda;
+    }.button {width: 100px;height: 60px;border: 1px solid #63cdda;
       color: #63cdda;
       background-color: transparent;
       text-transform: uppercase;
@@ -27,9 +23,7 @@ const item1={
       position: relative;
       overflow: hidden;
       margin: 10px;
-    }
-    #button1:hover,
-    #button2:hover {
+    }#button1:hover,#button2:hover {
       color: white;
     }
     
