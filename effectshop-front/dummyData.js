@@ -1,5 +1,6 @@
 const item1={
     id:'1',
+    title:'Button Effect',
     html:`
     <div class="Button_box">
     <button class="button" id="button1">Hover me</button>
@@ -65,6 +66,7 @@ const item1={
 
 const item2={
     id:'2',
+    title:'Heart Beat Animations',
     html:`
     <div class="container">
     <h3 class="text">Heart Beat</h3>
