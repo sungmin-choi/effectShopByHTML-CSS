@@ -6,6 +6,7 @@ const EffectCard = styled(Card)`
     height: 400px;
     display: inline-block;
     margin: 10px;
+    
 `
 
 const Items = ({effectData}) => {
