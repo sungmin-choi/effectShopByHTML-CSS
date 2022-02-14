@@ -13,7 +13,6 @@ const Container = styled.div`
       padding: 0;
       width: 930px;
       height: 500px;
-      overflow-y:scroll;
       font-family: "Montsrrat" sans-serif;
       ${(props)=>props.data.css}
     }

@@ -7,9 +7,8 @@ import styled from 'styled-components';
 const EffectCard = styled(Card)`
     width: 600px;
     height: 400px;
-    
+
     display: inline-block;
-    margin-right: 10px;
     margin-top: 20px;
     z-index: 0;
 
@@ -18,9 +17,19 @@ const EffectCard = styled(Card)`
       margin: 0;
       padding: 0;
       height: 340px;
-      overflow-y:scroll;
+      overflow-y: auto;
       font-family: "Montsrrat" sans-serif;
       ${(props)=>props.data.css}
+    }
+
+    @media (max-width:1300px){
+      &{
+      width: 700px;
+      height: 500px;
+        .effect-container{
+          height: 430px;
+        }
+      }
     }
 `
 const Item = ({loadPay}) => {
