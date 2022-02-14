@@ -7,11 +7,9 @@ import styled from 'styled-components';
 const EffectCard = styled(Card)`
     width: 600px;
     height: 400px;
-
     display: inline-block;
     margin-top: 20px;
     z-index: 0;
-
     .effect-container{
       position: relative;
       margin: 0;
@@ -21,7 +19,6 @@ const EffectCard = styled(Card)`
       font-family: "Montsrrat" sans-serif;
       ${(props)=>props.data.css}
     }
-
     @media (max-width:1300px){
       &{
       width: 700px;

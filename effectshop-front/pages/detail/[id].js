@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Divider } from 'antd'
 import styled from 'styled-components'
 import dummyData from '../../dummyData'
-
+import SyntaxHighlighter from 'react-syntax-highlighter';
 const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -16,7 +16,11 @@ const Container = styled.div`
       font-family: "Montsrrat" sans-serif;
       ${(props)=>props.data.css}
     }
-
+`
+const CodeContainer = styled.section`
+  width: 80%;
+  margin: auto;
+  padding-bottom: 20px;
 `
 
 const Detail= () => {
@@ -24,26 +28,37 @@ const Detail= () => {
   const [payLoad,setPayLoad] = useState({});
   const [isLoading,setIsLoading] = useState(true);
   useEffect(()=>{
-    setIsLoading(true);
+    if(!router.isReady) return;
     const {id} = router.query;
     const data = dummyData.filter((ele)=>ele.id === id);
     setPayLoad(...data);
     setIsLoading(false);
-  },[])
-  return (
-    <>
-    {isLoading ? <h1>Loading</h1>
-    :(<div>
+  },[router.isReady])
+  if(isLoading){
+    return (
+      <h1>Loading</h1>
+    )
+  }else{
+    return (
+      <div>
       <Divider plain ><h1>{payLoad.title}</h1></Divider>
       <Container data={payLoad}>
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payLoad.html}}></div>
       </Container>
       <Divider/>
-
-    </div>)
+      <CodeContainer>
+      <h1>HTML</h1>
+      <SyntaxHighlighter language='html' >
+        {payLoad.html}
+      </SyntaxHighlighter>
+      <h1>CSS</h1>
+      <SyntaxHighlighter language='css' >
+        {payLoad.css}
+      </SyntaxHighlighter>
+      </CodeContainer>
+      </div>
+      )
     }
-    </>
-  )
 }
 
 export default Detail
