@@ -1,12 +1,16 @@
 import React from 'react'
 import Link from 'next/link';
-import PropTypes from 'prop-types'
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
-
-const login = () => {
+import { useDispatch } from 'react-redux';
+const Login = () => {
+    const dispatch = useDispatch();
     const onFinish = (values) => {
         console.log('Success:', values);
+        dispatch({
+          type:'Login',
+          data:values
+        })
       };
     
     const onFinishFailed = (errorInfo) => {
@@ -63,6 +67,5 @@ const login = () => {
   )
 }
 
-login.propTypes = {}
 
-export default login
+export default Login

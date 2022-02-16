@@ -1,6 +1,8 @@
 import '../styles/globals.css'
 import 'antd/dist/antd.css';
 import Head from 'next/head';
+import PropTypes from 'prop-types'
+import wrapper from '../store/configureStore';
 import { createGlobalStyle } from 'styled-components';
 
 const Global = createGlobalStyle`
@@ -23,4 +25,8 @@ function MyApp({ Component, pageProps }) {
   </>)
 }
 
-export default MyApp
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired
+}
+
+export default wrapper.withRedux(MyApp);

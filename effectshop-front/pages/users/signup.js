@@ -1,9 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
-const signup = () => {
+const Signup = () => {
     const onFinish = (values) => {
         console.log('Success:', values);
       };
@@ -86,6 +85,4 @@ const signup = () => {
 )
 }
 
-signup.propTypes = {}
-
-export default signup
+export default Signup
