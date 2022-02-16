@@ -2,7 +2,27 @@ import React, { useCallback } from 'react'
 import { Input ,Divider} from 'antd';
 import styled from 'styled-components';
 import {screen} from '../styles/styleConstant';
+import Link from 'next/link';
 
+
+const DividerWrapper = styled.div`
+  width: 90%;
+  margin: auto;
+  position: relative;
+  padding-bottom: 3rem;
+`
+const LinkBox = styled.div`
+  position: absolute;
+  right: 5%;
+  top:20%;
+  font-size: 20px;
+  @media (max-width:${screen.mobile}px){
+    &{
+      margin-top: 10px;
+      position: relative;
+    }
+  }
+`
 
 const HeaderWrapper = styled.header`
   font-family: 'Mochiy Pop P One', sans-serif;
@@ -45,9 +65,12 @@ const Header = () => {
       size="large"
       onSearch={onSearch}
       />
-      <div style={{width:'90%',margin:'auto'}}>
+      <LinkBox>
+      <Link className='link' href='/users/login'><a>로그인</a></Link>
+      </LinkBox>
+      <DividerWrapper>
       <Divider />
-      </div>
+      </DividerWrapper>
     </HeaderWrapper>
     </>
   )
