@@ -3,6 +3,7 @@ import { Input ,Divider} from 'antd';
 import styled from 'styled-components';
 import {screen} from '../styles/styleConstant';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 
 const DividerWrapper = styled.div`
@@ -50,7 +51,7 @@ const Header = () => {
   const onSearch = useCallback(()=>{
     console.log('search');
   },[])
-
+  const {isLoggedIn} = useSelector(state=>state.user);
   return (
     <>
     <HeaderWrapper>
@@ -66,7 +67,8 @@ const Header = () => {
       onSearch={onSearch}
       />
       <LinkBox>
-      <Link className='link' href='/users/login'><a>로그인</a></Link>
+      {isLoggedIn ? <Link className='link' href='/users/profile'><a>프로필</a></Link>:
+      <Link className='link' href='/users/login'><a>로그인</a></Link>}
       </LinkBox>
       <DividerWrapper>
       <Divider />

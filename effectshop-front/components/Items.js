@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import dummyData from '../dummyData';
 import Item from './Item';
 import {screen} from '../styles/styleConstant';
-
+import PropTypes from 'prop-types'
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -24,12 +24,17 @@ const Container = styled.div`
 `
 
 //{dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
-const Items = () => {
+const Items = ({isProfile}) => {
   return (
     <Container>
-      {dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
+      {isProfile? dummyData.map((item)=> <Item key={item.id} loadPay={item} edit={true} />):
+                  dummyData.map((item)=> <Item key={item.id} loadPay={item} edit={false} />) }
     </Container>
   )
+}
+
+Items.prototype = {
+  isProfile: PropTypes.bool.isRequired
 }
 
 export default Items

@@ -12,7 +12,7 @@ const Signup = () => {
       };
   return (
     <>
-  <ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle>
+  <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
   <Container>
  <Title>회원가입</Title>
   <Form

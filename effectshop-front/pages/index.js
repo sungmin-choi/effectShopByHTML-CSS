@@ -2,7 +2,6 @@ import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Header from '../components/Header'
 import Items from '../components/Items'
-import { useState } from 'react'
 
 export default function Home() {
   return (
@@ -15,7 +14,7 @@ export default function Home() {
     </Head>
     <Header/>
     <section>
-      <Items />
+      <Items isProfile={false}/>
     </section>
     </>
   )

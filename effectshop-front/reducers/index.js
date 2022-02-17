@@ -9,9 +9,7 @@ const rootReducer = combineReducers({
                 console.log('HYDRATE',action);
                 return {...state,...action.payload}
             default:
-                return state;
-
-                
+                return state;      
         }
     },
     user,

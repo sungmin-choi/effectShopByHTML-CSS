@@ -3,14 +3,17 @@ import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 const Login = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const onFinish = (values) => {
         console.log('Success:', values);
         dispatch({
-          type:'Login',
+          type:'LOG_IN',
           data:values
         })
+        router.push('/');
       };
     
     const onFinishFailed = (errorInfo) => {
@@ -18,7 +21,7 @@ const Login = () => {
       };
   return (
       <>
-    <ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle>
+    <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
     <Container>
    <Title>로그인</Title>
     <Form
