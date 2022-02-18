@@ -53,11 +53,11 @@ const Detail= () => {
         <title>Effect Shop | {payLoad.title}</title>
       </Head>
       <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
-      <Divider plain style={{marginTop:'3rem'}}><h1>{payLoad.title}</h1></Divider>
+      <Divider plain style={{marginTop:'3rem'}}><h1>{`Title: < ${payLoad.title} >`}</h1></Divider>
       <Container data={payLoad}>
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payLoad.html}}></div>
       </Container>
-      <Divider/>
+      <Divider  plain><h1>{`Author: < ${payLoad.user.nickname} >`}</h1></Divider>
       <CodeContainer>
       <h1>HTML</h1>
       <Highlighter code={payLoad.html} language="html"/>

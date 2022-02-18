@@ -31,14 +31,14 @@ const Items = ({isProfile}) => {
   
   useEffect(()=>{
     if(isProfile && (me&&me.id)){
-      setItems(items.filter((item)=>item.userId ===me.id))
+      setItems(items.filter((item)=>item.user.id ===me.id))
     }
   },[])
   
   return (
     <Container>
-      {isProfile? items.map((item)=> <Item key={item.id} loadPay={item} edit={true} />):
-                  items.map((item)=> <Item key={item.id} loadPay={item} edit={false} />) }
+      {isProfile? items.map((item)=> <Item key={item.id} payload={item} edit={true} />):
+                  items.map((item)=> <Item key={item.id} payload={item} edit={false} />) }
     </Container>
   )
 }

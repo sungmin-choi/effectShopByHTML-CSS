@@ -1,8 +1,22 @@
 import React from 'react'
-import { Card,Tag } from 'antd';
+import { Card,Tag ,Button} from 'antd';
 import { HeartFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import styled from 'styled-components';
+
+const DeleteBtn = styled(Button)`
+  background-color: red;
+  border-color: red;
+  color: white;
+  &:hover{
+  background-color: red;
+  border-color: red;
+  color: white;
+  }
+  position: absolute;
+  bottom: 5px;
+  left: 7px;
+`
 
 const UserInfo = styled.div`
   position: absolute;
@@ -37,18 +51,19 @@ const EffectCard = styled(Card)`
       }
     }
 `
-const Item = ({loadPay}) => {
+const Item = ({payload,edit}) => {
   return (
     <EffectCard  
-    title={loadPay.title} 
-    data={loadPay} 
-    extra={<Link href={`/detail/${loadPay.id}`}><a>Detail</a></Link>}
+    title={payload.title} 
+    data={payload} 
+    extra={<Link href={`/detail/${payload.id}`}><a>Detail</a></Link>}
     >
-      <div className="effect-container"  dangerouslySetInnerHTML={{__html:loadPay.html}}></div>
+      <div className="effect-container"  dangerouslySetInnerHTML={{__html:payload.html}}></div>
     <UserInfo>
-    <Tag >{`Author: ${loadPay.user.nickname}`}</Tag>
-    <Tag ><HeartFilled/>{loadPay.likers.length}</Tag>
+    <Tag >{`Author: ${payload.user.nickname}`}</Tag>
+    <Tag ><HeartFilled/>{payload.likers.length}</Tag>
     </UserInfo>
+    {edit? <DeleteBtn>삭제하기</DeleteBtn>: null}
     </EffectCard>
   )
 }
