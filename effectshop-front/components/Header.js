@@ -15,11 +15,12 @@ const DividerWrapper = styled.div`
 const LinkBox = styled.div`
   position: absolute;
   right: 5%;
-  top:20%;
+  top:17%;
   font-size: 20px;
   @media (max-width:${screen.mobile}px){
     &{
       margin-top: 10px;
+      text-align: center;
       position: relative;
     }
   }

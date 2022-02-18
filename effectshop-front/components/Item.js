@@ -18,6 +18,12 @@ const DeleteBtn = styled(Button)`
   left: 7px;
 `
 
+const EditBtn = styled(Button)`
+  position: absolute;
+  bottom: 5px;
+  left: 6rem;
+`
+
 const UserInfo = styled.div`
   position: absolute;
   right: 1.1rem;
@@ -63,7 +69,9 @@ const Item = ({payload,edit}) => {
     <Tag >{`Author: ${payload.user.nickname}`}</Tag>
     <Tag ><HeartFilled/>{payload.likers.length}</Tag>
     </UserInfo>
-    {edit? <DeleteBtn>삭제하기</DeleteBtn>: null}
+    {edit? <><DeleteBtn>삭제하기</DeleteBtn>
+              <EditBtn>수정하기</EditBtn>
+            </>: null}
     </EffectCard>
   )
 }

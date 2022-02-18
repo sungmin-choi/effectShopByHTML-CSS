@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProjectTitle } from '../../styles/loginStyle'
@@ -6,7 +6,10 @@ import { Divider,Card, Avatar ,Button} from 'antd'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { EditOutlined,SettingOutlined } from '@ant-design/icons';
+import PostForm from '../../components/PostForm'
 import Items from '../../components/Items'
+
+
 const { Meta } = Card;
 
 const Containner = styled.div`
@@ -14,10 +17,7 @@ const Containner = styled.div`
   width: 90%;
   margin:auto;
 `
-const Openpen = styled.div`
-  margin-top: 10px;
 
-`
 const LogOutBtn = styled(Button)`
   position: absolute;
   right: 5px;
@@ -32,14 +32,6 @@ const LogOutBtn = styled(Button)`
   }
 `
 const Profile= () => {
-  const iframe = `
-  <iframe height="400" style="width: 80%;" scrolling="no" title="Untitled" src="https://codepen.io/sungmin-choi-the-sans/embed/jOaZqwb?default-tab=css%2Cresult&editable=true&theme-id=dark" 
-  frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-      See the Pen <a href="https://codepen.io/sungmin-choi-the-sans/pen/jOaZqwb">
-      Untitled</a> by sungmin-choi (<a href="https://codepen.io/sungmin-choi-the-sans">@sungmin-choi-the-sans</a>)
-      on <a href="https://codepen.io">CodePen</a>.
-  </iframe>
-  `
   const router = useRouter();
   const {me} = useSelector((state)=>state.user)
   const dispatch = useDispatch();
@@ -82,14 +74,11 @@ const Profile= () => {
     />
     <LogOutBtn onClick={handleLogOut} >로그아웃</LogOutBtn>
     </Card>
-    <h3>제출하시기 전에 Openpen 에서 테스트 해 보시고 제출하세요.</h3>
-    <Openpen>
-    <div dangerouslySetInnerHTML={{__html:iframe}}></div>
-    </Openpen>
+    <h2>제출하시기 전에 꼭 테스트 해 보시고 제출하세요.</h2>
+    <PostForm />
     <Divider orientation="left" plain>
       My Effects
     </Divider>
-    
     <section>
       <Items isProfile={true} />
     </section>
