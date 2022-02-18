@@ -1,9 +1,17 @@
 import React from 'react'
-import { Card } from 'antd';
+import { Card,Tag } from 'antd';
+import { HeartFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-
+const UserInfo = styled.div`
+  position: absolute;
+  right: 1.1rem;
+  bottom: 5px;
+  z-index: 10;
+  background-color: transparent;
+  border-radius: 10px;
+`
 const EffectCard = styled(Card)`
     width: 600px;
     height: 400px;
@@ -31,8 +39,16 @@ const EffectCard = styled(Card)`
 `
 const Item = ({loadPay}) => {
   return (
-    <EffectCard  title={loadPay.title} data={loadPay} extra={<Link href={`/detail/${loadPay.id}`}><a>Detail</a></Link>}>
+    <EffectCard  
+    title={loadPay.title} 
+    data={loadPay} 
+    extra={<Link href={`/detail/${loadPay.id}`}><a>Detail</a></Link>}
+    >
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:loadPay.html}}></div>
+    <UserInfo>
+    <Tag >{`Author: ${loadPay.user.nickname}`}</Tag>
+    <Tag ><HeartFilled/>{loadPay.likers.length}</Tag>
+    </UserInfo>
     </EffectCard>
   )
 }

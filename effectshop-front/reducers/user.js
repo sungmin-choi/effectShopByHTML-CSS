@@ -1,6 +1,6 @@
 export const initialized = {
     isLoggedIn: false,
-    user:null,
+    me:null,
     signUpData:{},
     loginData:{}
 }

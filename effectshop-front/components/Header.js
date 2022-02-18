@@ -10,7 +10,7 @@ const DividerWrapper = styled.div`
   width: 90%;
   margin: auto;
   position: relative;
-  padding-bottom: 3rem;
+  padding-bottom: 1rem;
 `
 const LinkBox = styled.div`
   position: absolute;

@@ -1,5 +1,7 @@
 import React,{useState,useEffect}from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
+import { ProjectTitle } from '../../styles/loginStyle'
 import { useRouter } from 'next/router'
 import { Divider } from 'antd'
 import styled from 'styled-components'
@@ -50,7 +52,8 @@ const Detail= () => {
       <Head>
         <title>Effect Shop | {payLoad.title}</title>
       </Head>
-      <Divider plain ><h1>{payLoad.title}</h1></Divider>
+      <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
+      <Divider plain style={{marginTop:'3rem'}}><h1>{payLoad.title}</h1></Divider>
       <Container data={payLoad}>
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payLoad.html}}></div>
       </Container>

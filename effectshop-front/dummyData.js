@@ -1,6 +1,7 @@
 const item1={
     id:'1',
-    userId:'1',
+    likers:[{id:'2'},{id:'1'}],
+    user:{id:'2',nickname:'licolas'},
     title:'Button Effect',
     html:`
     <div class="body">
@@ -57,7 +58,8 @@ const item1={
 
 const item2={
     id:'2',
-    userId:'1',
+    likers:[{id:'2'},{id:'1'}],
+    user:{id:'1',nickname:'sungmin-choi'},
     title:'Heart Beat Animations',
     html:`
     <div class="body">
@@ -117,7 +119,8 @@ const item2={
 
 const item3 = {
   id:'3',
-  userId:'1',
+  likers:[{id:'2'},{id:'1'}],
+  user:{id:'1',nickname:'sungmin-choi'},
   title:'taskList',
   html:`
   <div class="body">
@@ -207,7 +210,8 @@ const item3 = {
 
 const item4 ={
   id:'4',
-  userId:'1',
+  likers:[{id:'2'},{id:'1'}],
+  user:{id:'1',nickname:'sungmin-choi'},
   title:'Button Effect2',
   html:`
   <div class="body">
