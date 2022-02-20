@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { LOG_IN_REQUEST} from '../../reducers/user';
 const Login = () => {
+    const {logInLoading, logInDone} = useSelector((state)=>state.user);
     const router = useRouter();
     const dispatch = useDispatch();
+
+    useEffect(()=>{
+      if(logInDone){
+        router.push('/');
+      }
+    },[logInDone]);
+
     const onFinish = (values) => {
-        console.log('Success:', values);
         dispatch({
-          type:'LOG_IN',
+          type:LOG_IN_REQUEST,
           data:values
         })
-        router.push('/');
       };
     
     const onFinishFailed = (errorInfo) => {
@@ -56,9 +63,12 @@ const Login = () => {
       <Input.Password placeholder='비밀번호'/>
     </Form.Item>
     <Form.Item>
-      <SubmitBtn type="primary" htmlType="submit">
-        로그인 하기
-      </SubmitBtn>
+      {logInLoading?  <SubmitBtn type="primary" loading>
+            로그인중
+          </SubmitBtn>:
+          <SubmitBtn type="primary" htmlType="submit">
+            로그인 하기
+          </SubmitBtn>}
     </Form.Item>
   </Form>
   <SignUpMessage>
