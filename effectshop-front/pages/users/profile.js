@@ -5,10 +5,10 @@ import { ProjectTitle } from '../../styles/loginStyle'
 import { Divider,Card, Avatar ,Button} from 'antd'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import { EditOutlined,SettingOutlined } from '@ant-design/icons';
+import { EditOutlined,SettingOutlined,LoadingOutlined} from '@ant-design/icons';
 import PostForm from '../../components/PostForm'
 import Items from '../../components/Items'
-
+import { LOG_OUT_REQUEST } from '../../reducers/user'
 
 const { Meta } = Card;
 
@@ -31,22 +31,33 @@ const LogOutBtn = styled(Button)`
   color: white;
   }
 `
+const LogOutLoadingBtn = styled(Button)`
+  position: absolute;
+  right: -12rem;
+  top:-3rem;
+  background-color: red;
+  border-color: red;
+  color: white;
+
+`
+
 const Profile= () => {
   const router = useRouter();
-  const {me} = useSelector((state)=>state.user)
+  const {me,logOutLoading,logOutDone} = useSelector((state)=>state.user)
   const dispatch = useDispatch();
 
   useEffect(()=>{
       if(!(me && me.id)){
-          router.push('/');
+        router.push('/');
+      }else if(logOutDone){
+        router.push('/');
       }
-  },[me && me.id]);
+  },[me && me.id,logOutDone]);
 
   const handleLogOut = useCallback(()=>{
     dispatch({
-      type:'LOG_OUT',
+      type:LOG_OUT_REQUEST,
     })
-    router.push('/');
   },[])
 
   if(!me){
@@ -72,7 +83,7 @@ const Profile= () => {
       title={me.nickname}
       description={me.email}
     />
-    <LogOutBtn onClick={handleLogOut} >로그아웃</LogOutBtn>
+    <LogOutBtn onClick={handleLogOut} >{logOutLoading? <LoadingOutlined/>:''}로그아웃</LogOutBtn>
     </Card>
     <h2>제출하시기 전에 꼭 테스트 해 보시고 제출하세요.</h2>
     <PostForm />
