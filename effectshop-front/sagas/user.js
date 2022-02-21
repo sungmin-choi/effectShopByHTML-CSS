@@ -20,7 +20,7 @@ function* logIn(action){//3
     }catch(err){
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
             type:LOG_IN_FAILURE,
-            data:err.response.data,
+            error:err.response.data,
         })
     }
 }
@@ -40,7 +40,7 @@ function* logOut(action){//3
     }catch(err){
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
             type:LOG_IN_FAILURE,
-            data:err.response.data,
+            error:err.response.data,
         })
     }
 }

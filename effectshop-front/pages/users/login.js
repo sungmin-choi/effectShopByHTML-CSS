@@ -22,10 +22,6 @@ const Login = () => {
           data:values
         })
       };
-    
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
   return (
       <>
     <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
@@ -35,7 +31,6 @@ const Login = () => {
     style={{position:'relative'}}
     name="basic"
     onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
     autoComplete="off"
   >
     <label>이메일</label>
