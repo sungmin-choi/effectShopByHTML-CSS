@@ -25,8 +25,7 @@ const Container = styled.div`
 `
 
 //{dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
-const Items = ({isProfile}) => {
-  const [items, setItems] = useState(dummyData);
+const Items = ({isProfile,effects}) => {
   const {me} = useSelector((state)=>state.user);
   
   useEffect(()=>{
@@ -37,8 +36,8 @@ const Items = ({isProfile}) => {
   
   return (
     <Container>
-      {isProfile? items.map((item)=> <Item key={item.id} payload={item} edit={true} />):
-                  items.map((item)=> <Item key={item.id} payload={item} edit={false} />) }
+      {isProfile? effects.map((item)=> <Item key={item.id} payload={item} edit={true} />):
+                  effects.map((item)=> <Item key={item.id} payload={item} edit={false} />) }
     </Container>
   )
 }

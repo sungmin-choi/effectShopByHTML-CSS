@@ -39,7 +39,7 @@ function* logOut(action){//3
     })
     }catch(err){
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
-            type:LOG_IN_FAILURE,
+            type:LOG_OUT_FAILURE,
             error:err.response.data,
         })
     }
