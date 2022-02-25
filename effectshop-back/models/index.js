@@ -11,6 +11,8 @@ const sequelize = new Sequelize(
   config
 ); 
 
+db.User = require('./user')(sequelize, Sequelize);
+db.Effect = require('./effect')(sequelize, Sequelize);
 
 
 
