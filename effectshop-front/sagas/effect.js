@@ -1,4 +1,4 @@
-import { all,fork, takeLatest,put,delay,throttle} from "@redux-saga/core/effects";
+import { all,fork, takeLatest,put,delay} from "@redux-saga/core/effects";
 import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE } from "../reducers/effect";
 import {loadEffects} from '../reducers/effect'
 
