@@ -1,38 +1,49 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
 const Signup = () => {
-    const onFinish = (values) => {
-        console.log('Success:', values);
-      };
-    
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState({});
+  const emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/gm;
+  useEffect(() => {
+    forceUpdate({});
+  }, []);
+  const onFinish = (values) => {
+    const {nickname,email,password,verifyPwd} =values;
+    const checkEmail = emailReg.exec(email);
+    if(checkEmail === null){
+      return alert('이메일 형식 잘못 입력했습니다!');
+    }
+    if(password !== verifyPwd){
+      return alert('비밀번호 와 비밀번호 확인이 서로 다릅니다!');
+    }
+    console.log('ok')
+        
+  };
   return (
     <>
   <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
   <Container>
  <Title>회원가입</Title>
   <Form
+  form={form}
   style={{position:'relative'}}
   name="basic"
   onFinish={onFinish}
-  onFinishFailed={onFinishFailed}
   autoComplete="off"
 >
 <label>이름</label>
   <Form.Item
-    name="name"
+    name="nickname"
     rules={[
       {
         required: true,
-        message: 'Please input your email!',
+        message: 'Please input your nickname!',
       },
     ]}
   >
-    <Input  placeholder='이름'/>
+    <Input placeholder='이름'/>
   </Form.Item>
   <label>이메일</label>
   <Form.Item
@@ -70,10 +81,15 @@ const Signup = () => {
   >
     <Input.Password placeholder='비밀번호 확인'/>
   </Form.Item>
-  <Form.Item>
-    <SubmitBtn type="primary" htmlType="submit">
+  <Form.Item shouldUpdate>
+  {() => (
+    <SubmitBtn disabled={
+      !form.isFieldsTouched(true) ||
+      !!form.getFieldsError().filter(({ errors }) => errors.length).length
+    } type="primary" htmlType="submit">
       계정 만들기
     </SubmitBtn>
+  )}
   </Form.Item>
 </Form>
 <SignUpMessage>
