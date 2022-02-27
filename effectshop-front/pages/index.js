@@ -16,7 +16,6 @@ export default function Home() {
 
   useEffect(()=>{
     const handleScroll = ()=>{
-      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
       if(window.scrollY+document.documentElement.clientHeight>document.documentElement.scrollHeight-100){
         if(!loadEffectsLoading && hasMoreEffects){
           dispatch({

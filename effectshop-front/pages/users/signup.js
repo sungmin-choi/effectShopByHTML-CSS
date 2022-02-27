@@ -2,15 +2,31 @@ import React,{useEffect,useState} from 'react'
 import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
 import { Form, Input} from 'antd';
+import { useDispatch,useSelector} from 'react-redux';
+import { SIGN_UP_REQUEST } from '../../reducers/user';
+import {useRouter} from 'next/router';
 const Signup = () => {
+  const dispatch = useDispatch();
+  const {signUpError,signUpDone} = useSelector(state=>state.user);
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
   const emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/gm;
+  const router = useRouter();
   useEffect(() => {
     forceUpdate({});
   }, []);
-  const onFinish = (values) => {
-    const {nickname,email,password,verifyPwd} =values;
+
+  useEffect(()=>{
+    if(signUpDone){
+      router.push('/');
+    }
+    if(signUpError){
+      alert(signUpError);
+    }
+  },[signUpDone,signUpError]);
+  
+  const onFinish = (data) => {
+    const {nickname,email,password,verifyPwd} =data;
     const checkEmail = emailReg.exec(email);
     if(checkEmail === null){
       return alert('이메일 형식 잘못 입력했습니다!');
@@ -18,7 +34,11 @@ const Signup = () => {
     if(password !== verifyPwd){
       return alert('비밀번호 와 비밀번호 확인이 서로 다릅니다!');
     }
-    console.log('ok')
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data:{nickname,email,password}
+    })
+    
         
   };
   return (
