@@ -91,7 +91,7 @@ const Profile= () => {
       My Effects
     </Divider>
     <section>
-      <Items  isProfile={true} />
+      {/* <Items  isProfile={true} /> */}
     </section>
     </Containner>
     </>

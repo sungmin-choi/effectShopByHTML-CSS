@@ -5,17 +5,17 @@ import { LOG_IN_SUCCESS,LOG_IN_FAILURE,LOG_IN_REQUEST,
 import axios from "axios";
 
 function logInAPI(data){//4
-    return axios.post('/api/login',data)
+    return axios.post('/user/local',data)
 }
 
 function* logIn(action){//3
     try{
-    //const result = yield call(logInAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    const result = yield call(logInAPI,action.data);//call: 비동기에서 await 같은 개념이다.
 
-    yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
     yield put({
         type:LOG_IN_SUCCESS,
-        data:action.data
+        data:result.data
     })
 
     }catch(err){
@@ -47,7 +47,7 @@ function* logOut(action){//3
 }
 
 function signUpAPI(data){//4
-    return axios.post('http://localhost:3065/user',data)
+    return axios.post('/user',data)
 }
 
 function* signUp(action){//3
