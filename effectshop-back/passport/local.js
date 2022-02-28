@@ -16,11 +16,12 @@ module.exports = () =>{
             if(!user){
                 return done(null,false,{reason:'존재하지 않는 이메일입니다.'});
             }
-            const compare = bcrypt.compare(password,user.password);
-            if(!compare){
-                return done(null,false,{reason:'비밀번호가 일치하지 않습니다.'});
+            const compare = await bcrypt.compare(password,user.password);
+            console.log(compare);
+            if(compare){
+                return done(null,user);
             }
-            return done(null,user);
+            return done(null,false,{reason:'비밀번호가 일치하지 않습니다.'});
         }catch(error){
             console.error(error);
             return done(error);

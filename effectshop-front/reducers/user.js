@@ -41,10 +41,12 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
         case SIGN_UP_REQUEST:
             draft.signUpLoading=true;
             draft.signUpDone = false;
+            draft.signUpError = null;
             break;
         case SIGN_UP_SUCCESS:
             draft.signUpDone=true;
             draft.signUpLoading=false;
+            draft.signUpError = null;
             break;         
         case SIGN_UP_FAILURE:
             draft.signUpDone=false;
@@ -54,26 +56,31 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
         case LOG_IN_REQUEST:
             draft.logInLoading=true;
             draft.logInDone = false;
+            draft.logInError = null;
             break;
         case LOG_IN_SUCCESS:
             draft.logInDone=true;
             draft.logInLoading=false;
-            draft.logOutDone=false;
+            draft.logInError = null;
+            draft.logOutDone = false;
             draft.me=action.data; 
             break;         
         case LOG_IN_FAILURE:
             draft.logInDone=false;
             draft.logInLoading=false;
+            draft.me = null;
             draft.logInError=action.error;
             break;          
         case LOG_OUT_REQUEST:
             draft.logOutLoading=true;
             draft.logOutDone=false;
+            draft.logOutError = null;
             break;
         case LOG_OUT_SUCCESS:
             draft.logOutDone=true;
-            draft.logOutLoadin=false;
-            draft.logInDone=false;
+            draft.logOutLoading=false;
+            draft.logOutError = null;
+            draft.logInDone = false;
             draft.me=null;
             break;
         case LOG_OUT_FAILURE:

@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 320px;
   height: 374px;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
 `
@@ -34,4 +34,16 @@ export const ProjectTitle = styled.h1`
     position: absolute;
     top: 10px;
     left: 10px;
+`
+export const GithubBtn = styled(Button)`
+  width: 100%;
+  margin-top: 10px;
+  color: white;
+  background-color: black;
+  &:hover{
+    color: white;
+    background-color: black;
+    border: opx solid black;
+  }
+
 `

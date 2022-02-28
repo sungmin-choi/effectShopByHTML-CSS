@@ -68,7 +68,7 @@ const Header = () => {
       onSearch={onSearch}
       />
       <LinkBox>
-      {me ? <Link className='link' href='/users/profile'><a>프로필</a></Link>:
+      {me&&me.id ? <Link className='link' href='/users/profile'><a>프로필</a></Link>:
       <Link className='link' href='/users/login'><a>로그인</a></Link>}
       </LinkBox>
       <DividerWrapper>

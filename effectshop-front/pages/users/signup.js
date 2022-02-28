@@ -1,10 +1,12 @@
 import React,{useEffect,useState} from 'react'
 import Link from 'next/link';
-import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
-import { Form, Input} from 'antd';
+import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle,GithubBtn} from '../../styles/loginStyle';
+import { Form, Input,Divider} from 'antd';
 import { useDispatch,useSelector} from 'react-redux';
 import { SIGN_UP_REQUEST } from '../../reducers/user';
 import {useRouter} from 'next/router';
+import { GithubOutlined } from '@ant-design/icons';
+
 const Signup = () => {
   const dispatch = useDispatch();
   const {signUpError,signUpDone} = useSelector(state=>state.user);
@@ -46,6 +48,8 @@ const Signup = () => {
   <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
   <Container>
  <Title>회원가입</Title>
+ <GithubBtn><GithubOutlined/>Github으로 계속하기</GithubBtn>
+   <Divider plain>또는</Divider>
   <Form
   form={form}
   style={{position:'relative'}}

@@ -1,22 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import Link from 'next/link';
-import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle} from '../../styles/loginStyle';
-import { Form, Input} from 'antd';
+import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle,GithubBtn} from '../../styles/loginStyle';
+import { Form, Input,Divider,Button} from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { LOG_IN_REQUEST} from '../../reducers/user';
+import { GithubOutlined } from '@ant-design/icons';
+
+
+
+
 const Login = () => {
-    const {logInLoading, logInDone} = useSelector((state)=>state.user);
+    const {logInLoading,logInError,me} = useSelector((state)=>state.user);
     const router = useRouter();
     const dispatch = useDispatch();
 
+    const emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/gm;
+    
     useEffect(()=>{
-      if(logInDone){
+      if(me&&me.id){
         router.push('/');
       }
-    },[logInDone]);
+      if(logInError){
+        alert(logInError);
+      }
+    },[me&&me.id,logInError]);
 
+ 
     const onFinish = (values) => {
+      const {email} = values;
+      const checkEmail = emailReg.exec(email);
+      if(checkEmail === null){
+        return alert('이메일 형식 잘못 입력했습니다!');
+      }
         dispatch({
           type:LOG_IN_REQUEST,
           data:values
@@ -27,6 +43,8 @@ const Login = () => {
     <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
     <Container>
    <Title>로그인</Title>
+   <GithubBtn><GithubOutlined/>Github으로 계속하기</GithubBtn>
+   <Divider plain>또는</Divider>
     <Form
     style={{position:'relative'}}
     name="basic"
@@ -57,11 +75,12 @@ const Login = () => {
     >
       <Input.Password placeholder='비밀번호'/>
     </Form.Item>
-    <Form.Item>
+    <Form.Item >
       {logInLoading?  <SubmitBtn type="primary" loading>
             로그인중
           </SubmitBtn>:
-          <SubmitBtn type="primary" htmlType="submit">
+          <SubmitBtn 
+          type="primary" htmlType="submit">
             로그인 하기
           </SubmitBtn>}
     </Form.Item>
