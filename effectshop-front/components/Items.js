@@ -28,11 +28,11 @@ const Container = styled.div`
 const Items = ({isProfile,effects}) => {
   const {me} = useSelector((state)=>state.user);
   
-  useEffect(()=>{
-    if(isProfile && (me&&me.id)){
-      setItems(items.filter((item)=>item.user.id ===me.id))
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(isProfile && (me&&me.id)){
+  //     setItems(items.filter((item)=>item.user.id ===me.id))
+  //   }
+  // },[])
   
   return (
     <Container>

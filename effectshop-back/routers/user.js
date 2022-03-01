@@ -4,6 +4,7 @@ const {User,Effect} = require('../models')
 const router = express.Router();
 const passport = require('passport');
 const {isLoggedIn,isNotLoggedIn} = require('./middlewares');
+
 router.post('/local',isNotLoggedIn, (req,res,next)=>{
  passport.authenticate('local',(err,user,info)=>{
     if(err){
@@ -23,9 +24,14 @@ router.post('/local',isNotLoggedIn, (req,res,next)=>{
             attributes:['id','nickname','email'],
             include:[{
                 model: Effect,
-            },{
-                model: Effect,
-                as: 'Liked',
+                attributes:['id','title','html','css'],
+                include:[{
+                    model: User,
+                    as: 'Likers'
+                },{
+                    model: User,
+                    attributes: ['id','nickname']
+                }]
             }]
         })
         return res.status(200).json(userWithoutPassword);

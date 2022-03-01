@@ -38,9 +38,12 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
-
+export const ADD_EFFECT_TO_ME = 'ADD_EFFECT_TO_ME';
 const reducer = (state = initialized, action)=>produce(state,(draft)=>{
     switch(action.type){
+        case ADD_EFFECT_TO_ME:
+            draft.me.Effects.unshift(action.data);
+            break;
         case GITHUB_REQUEST:
             draft.githubLoading=true;
             break;

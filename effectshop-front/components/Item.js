@@ -3,7 +3,8 @@ import { Card,Tag ,Button} from 'antd';
 import { HeartFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
+import {REMOVE_EFFECTS_REQUEST} from '../reducers/effect';
 const DeleteBtn = styled(Button)`
   background-color: red;
   border-color: red;
@@ -58,6 +59,16 @@ const EffectCard = styled(Card)`
     }
 `
 const Item = ({payload,edit}) => {
+  const dispatch = useDispatch();
+  const deleteEffect = ()=>{
+    const result =window.confirm('정말로 지우시겠습니까?')
+    if(result){
+      dispatch({
+        type:REMOVE_EFFECTS_REQUEST,
+        data: payload.id
+      })
+    }
+  }
   return (
     <EffectCard  
     title={payload.title} 
@@ -66,10 +77,10 @@ const Item = ({payload,edit}) => {
     >
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payload.html}}></div>
     <UserInfo>
-    <Tag >{`Author: ${payload.user.nickname}`}</Tag>
-    <Tag ><HeartFilled/>{payload.likers.length}</Tag>
+    <Tag >{`Author: ${payload.User.nickname}`}</Tag>
+    <Tag ><HeartFilled/>{payload.Likers.length}</Tag>
     </UserInfo>
-    {edit? <><DeleteBtn>삭제하기</DeleteBtn>
+    {edit? <><DeleteBtn onClick={deleteEffect}>삭제하기</DeleteBtn>
               <EditBtn>수정하기</EditBtn>
             </>: null}
     </EffectCard>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {isLoggedIn} = require('./middlewares');
-const {Effect} = require('../models');
+const {Effect,User} = require('../models');
 router.post('/', isLoggedIn, async(req,res,next)=>{
     try{
         const effect = await Effect.create({
@@ -10,7 +10,19 @@ router.post('/', isLoggedIn, async(req,res,next)=>{
             css: req.body.css,
             UserId:req.user.id
         });
-        return res.status(201).send(effect);
+
+        const fullEffect = await Effect.findOne({
+            where:{
+                id:effect.id
+            },
+            include:[{
+                model:User
+            },{
+                model:User,
+                as: 'Likers'
+            }]
+        })
+        return res.status(201).json(fullEffect);
     }catch(error){
         console.error(error);
         next(error);

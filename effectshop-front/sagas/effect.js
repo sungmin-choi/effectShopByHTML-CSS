@@ -1,10 +1,11 @@
 import { all,fork, takeLatest,put,delay,call} from "@redux-saga/core/effects";
 import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
          ADD_EFFECTS_REQUEST,ADD_EFFECTS_SUCCESS,ADD_EFFECTS_FAILURE } from "../reducers/effect";
+import { ADD_EFFECT_TO_ME } from "../reducers/user";
 import {loadEffects} from '../reducers/effect'
 import axios from "axios";
-function loadEffectAPI(data){//4
-    return axios.post('/api/login',data)
+function loadEffectAPI(){//4
+    return axios.get('/effect');
 }
 
 function* loadEffect(action){//3
@@ -35,6 +36,10 @@ function* addEffect(action){//3
     //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
     yield put({
         type:ADD_EFFECTS_SUCCESS,
+        data: result.data
+    })
+    yield put({
+        type:ADD_EFFECT_TO_ME,
         data: result.data
     })
     }catch(err){

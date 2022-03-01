@@ -27,8 +27,12 @@ const CustomCard = styled(Card)`
   }
   @media (max-width:1300px){
       &{
-        position: static;
-        
+        width: 400px;
+      }
+  }
+  @media (max-width:800px){
+      &{
+        width: 300px;
       }
   }
 `
@@ -41,11 +45,13 @@ const PostForm = () => {
   const [title,setTitle] = useState('');
   const dispatch = useDispatch();
   const onFinish = (values) =>{
-    console.log(values);
     dispatch({
       type:ADD_EFFECTS_REQUEST,
       data:values
     })
+    setHtml('');
+    setCss('');
+    setTitle('');
   }
 
   const initialHtml = `<div class="body">
