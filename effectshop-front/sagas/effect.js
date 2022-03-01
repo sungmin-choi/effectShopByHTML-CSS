@@ -1,7 +1,8 @@
 import { all,fork, takeLatest,put,delay,call} from "@redux-saga/core/effects";
 import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
-         ADD_EFFECTS_REQUEST,ADD_EFFECTS_SUCCESS,ADD_EFFECTS_FAILURE } from "../reducers/effect";
-import { ADD_EFFECT_TO_ME } from "../reducers/user";
+         ADD_EFFECTS_REQUEST,ADD_EFFECTS_SUCCESS,ADD_EFFECTS_FAILURE ,
+        REMOVE_EFFECTS_REQUEST,REMOVE_EFFECTS_SUCCESS,REMOVE_EFFECTS_FAILURE} from "../reducers/effect";
+import { ADD_EFFECT_TO_ME,REMOVE_EFFECT_OF_ME} from "../reducers/user";
 import {loadEffects} from '../reducers/effect'
 import axios from "axios";
 function loadEffectAPI(){//4
@@ -52,17 +53,47 @@ function* addEffect(action){//3
 }
 
 
+function removeEffectAPI(data){//4
+    return axios.delete(`/effect/${data}`);
+}
+
+function* removeEffect(action){//3
+    try{
+    const result = yield call(removeEffectAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+    yield put({
+        type:REMOVE_EFFECTS_SUCCESS,
+        data: result.data
+    })
+    yield put({
+        type:REMOVE_EFFECT_OF_ME,
+        data: action.data
+    })
+    }catch(err){
+        console.error(err);
+        yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
+            type:ADD_EFFECTS_FAILURE,
+            error:err.response.data,
+        })
+    }
+}
+
+
 function* watchLoadEffects(){
     yield takeLatest(LOAD_EFFECTS_REQUEST,loadEffect);
 }
-function* watchAddEffects(){
+function* watchAddEffect(){
     yield takeLatest(ADD_EFFECTS_REQUEST,addEffect);
+}
+function* watchRemoveEffect(){
+    yield takeLatest(REMOVE_EFFECTS_REQUEST,removeEffect);
 }
 
 
 export default function* effectSaga(){
     yield all([
         fork(watchLoadEffects),
-        fork(watchAddEffects),
+        fork(watchAddEffect),
+        fork(watchRemoveEffect),
     ])
 }

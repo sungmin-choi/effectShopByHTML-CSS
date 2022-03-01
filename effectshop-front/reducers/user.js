@@ -39,11 +39,16 @@ export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
 export const ADD_EFFECT_TO_ME = 'ADD_EFFECT_TO_ME';
+export const REMOVE_EFFECT_OF_ME = 'REMOVE_EFFECT_TO_ME';
+
 const reducer = (state = initialized, action)=>produce(state,(draft)=>{
     switch(action.type){
         case ADD_EFFECT_TO_ME:
             draft.me.Effects.unshift(action.data);
             break;
+        case REMOVE_EFFECT_OF_ME:
+            draft.me.Effects = draft.me.Effects.filter((effect)=>effect.id!==Number(action.data));
+            break;           
         case GITHUB_REQUEST:
             draft.githubLoading=true;
             break;
