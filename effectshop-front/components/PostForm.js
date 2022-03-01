@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
 import {Form,Input,Button,Card} from 'antd';
 import styled from 'styled-components';
-
+import { ADD_EFFECTS_REQUEST } from '../reducers/effect';
+import { useDispatch } from 'react-redux';
 
 
 const CustomForm = styled(Form)`
@@ -38,6 +39,14 @@ const PostForm = () => {
   const [html,setHtml] = useState('');
   const [css,setCss] = useState('');
   const [title,setTitle] = useState('');
+  const dispatch = useDispatch();
+  const onFinish = (values) =>{
+    console.log(values);
+    dispatch({
+      type:ADD_EFFECTS_REQUEST,
+      data:values
+    })
+  }
 
   const initialHtml = `<div class="body">
   <h1>여기안에서 테스트 해 주세요</h1>
@@ -45,7 +54,9 @@ const PostForm = () => {
 
   return (
     <div style={{position:'relative'}}>
-    <CustomForm name="dynamic_rule">
+    <CustomForm
+    onFinish ={onFinish} 
+    name="dynamic_rule">
     <label><h3>Title</h3></label>
     <Form.Item
       name="title"
@@ -67,7 +78,7 @@ const PostForm = () => {
       <Input.TextArea style={{height:'300px'}} value={css} onChange={(e)=>setCss(e.target.value)}/>
     </Form.Item>
     <Form.Item >
-      <Button type="primary">
+      <Button type="primary" htmlType="submit">
         생성하기
       </Button>
     </Form.Item>

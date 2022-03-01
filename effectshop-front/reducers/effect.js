@@ -5,6 +5,9 @@ export const initialized = {
     loadEffectsLoading:false,
     loadEffectsDone:false,
     loadEffectsError:null,
+    addEffectsLoading:false,
+    addEffectsDone:false,
+    addEffectsError:null,
     hasMoreEffects:true,
 }
 
@@ -17,6 +20,11 @@ const loadMoreEffects = () =>{
     }
 }
 export const loadEffects = loadMoreEffects();
+
+
+export const ADD_EFFECTS_REQUEST = "ADD_EFFECTS_REQUEST";
+export const ADD_EFFECTS_SUCCESS = "ADD_EFFECTS_SUCCESS";
+export const ADD_EFFECTS_FAILURE = "ADD_EFFECTS_FAILURE";
 
 export const LOAD_EFFECTS_REQUEST = "LOAD_EFFECTS_REQUEST";
 export const LOAD_EFFECTS_SUCCESS = "LOAD_EFFECTS_SUCCESS";
@@ -38,6 +46,21 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.loadEffectsDone=false;
             draft.loadEffectsLoading=false;
             draft.loadEffectsError = action.error;
+            break;
+        case ADD_EFFECTS_REQUEST:
+            draft.addEffectsLoading = true;
+            draft.addEffectsDone = false;
+            break;
+        case ADD_EFFECTS_SUCCESS:
+            draft.addEffectsDone = true;
+            draft.addEffectsLoading = false;
+            draft.mainEffects = draft.mainEffects.unshift(action.data);
+            draft.hasMoreEffects = draft.mainEffects.length<16;
+            break;
+        case ADD_EFFECTS_FAILURE:
+            draft.addEffectsDone=false;
+            draft.addEffectsLoading=false;
+            draft.addEffectsError = action.error;
             break;
         default:
             return;

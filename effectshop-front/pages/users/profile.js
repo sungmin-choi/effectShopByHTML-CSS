@@ -7,9 +7,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { EditOutlined,SettingOutlined,LoadingOutlined} from '@ant-design/icons';
 import PostForm from '../../components/PostForm'
-import Items from '../../components/Items'
 import { LOG_OUT_REQUEST } from '../../reducers/user'
-
+import Items from '../../components/Items';
 const { Meta } = Card;
 
 const Containner = styled.div`
@@ -91,7 +90,7 @@ const Profile= () => {
       My Effects
     </Divider>
     <section>
-      {/* <Items  isProfile={true} /> */}
+       {/* <Items isProfile={true} />  */}
     </section>
     </Containner>
     </>

@@ -1,10 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const {User} = require('../models')
+const {User,Effect} = require('../models')
 const router = express.Router();
 const passport = require('passport');
-
-router.post('/local', (req,res,next)=>{
+const {isLoggedIn,isNotLoggedIn} = require('./middlewares');
+router.post('/local',isNotLoggedIn, (req,res,next)=>{
  passport.authenticate('local',(err,user,info)=>{
     if(err){
         console.error(err);
@@ -18,18 +18,32 @@ router.post('/local', (req,res,next)=>{
             console.error(loginErr);
             return next(loginErr);
         }
-        return res.status(200).json(user);
+        const userWithoutPassword = await User.findOne({
+            where:{ id:user.id},
+            attributes:['id','nickname','email'],
+            include:[{
+                model: Effect,
+            },{
+                model: Effect,
+                as: 'Liked',
+            }]
+        })
+        return res.status(200).json(userWithoutPassword);
     })
  })(req,res,next);   
 });
 
-router.post('/logout',(req,res,next)=>{
+router.get('/github',passport.authenticate('github'));
+router.get('/github/callback',passport.authenticate('github',{successRedirect:'http://localhost:3000'}));
+
+
+router.post('/logout',isLoggedIn,(req,res,next)=>{
     req.logout();
     req.session.destroy();
     res.status(200).send('ok');
 })
 
-router.post('/', async(req,res,next)=>{
+router.post('/', isNotLoggedIn,async(req,res,next)=>{
     try{
     const exUser = await User.findOne({
         where:{

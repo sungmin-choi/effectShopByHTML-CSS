@@ -1,5 +1,6 @@
 const passport = require('passport');
 const local = require('./local');
+const github = require('./github');
 const {User} = require('../models');
 
 module.exports = () =>{
@@ -20,6 +21,6 @@ module.exports = () =>{
             done(error);
         }
     });
-
+    github();
     local();
 };

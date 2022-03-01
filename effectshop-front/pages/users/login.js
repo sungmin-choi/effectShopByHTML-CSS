@@ -4,7 +4,7 @@ import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle,GithubBtn} from '.
 import { Form, Input,Divider,Button} from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { LOG_IN_REQUEST} from '../../reducers/user';
+import { LOG_IN_REQUEST,GITHUB_REQUEST} from '../../reducers/user';
 import { GithubOutlined } from '@ant-design/icons';
 
 
@@ -26,7 +26,9 @@ const Login = () => {
       }
     },[me&&me.id,logInError]);
 
- 
+    const githubLogin = () =>{
+      window.open("http://localhost:3065/user/github", "_self");
+    }
     const onFinish = (values) => {
       const {email} = values;
       const checkEmail = emailReg.exec(email);
@@ -43,7 +45,7 @@ const Login = () => {
     <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
     <Container>
    <Title>로그인</Title>
-   <GithubBtn><GithubOutlined/>Github으로 계속하기</GithubBtn>
+   <GithubBtn onClick={githubLogin} ><GithubOutlined/>Github으로 계속하기</GithubBtn>
    <Divider plain>또는</Divider>
     <Form
     style={{position:'relative'}}

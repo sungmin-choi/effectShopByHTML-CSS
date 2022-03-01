@@ -1,6 +1,7 @@
 import produce from "immer";
 
 export const initialized = {
+    githubLoading:false, //깃허브 로그인 시도중
     logInLoading:false, //로그인 시도중
     logInDone: false,
     logInError:null,
@@ -23,6 +24,8 @@ const dummyUser = {
             {id:'4',nickname:'sungmin-choi'}]
 }
 
+export const GITHUB_REQUEST = 'GITHUB_REQUEST';
+
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
@@ -38,6 +41,10 @@ export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
 const reducer = (state = initialized, action)=>produce(state,(draft)=>{
     switch(action.type){
+        case GITHUB_REQUEST:
+            draft.githubLoading=true;
+            break;
+
         case SIGN_UP_REQUEST:
             draft.signUpLoading=true;
             draft.signUpDone = false;
@@ -47,11 +54,15 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
             draft.signUpDone=true;
             draft.signUpLoading=false;
             draft.signUpError = null;
+
+            draft.githubLoading = false;
             break;         
         case SIGN_UP_FAILURE:
             draft.signUpDone=false;
             draft.signUpLoading=false;
             draft.signUpError=action.error;
+
+            draft.githubLoading = false;
             break;     
         case LOG_IN_REQUEST:
             draft.logInLoading=true;
@@ -64,6 +75,8 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
             draft.logInError = null;
             draft.logOutDone = false;
             draft.me=action.data; 
+
+            draft.githubLoading = false;
             break;         
         case LOG_IN_FAILURE:
             draft.logInDone=false;

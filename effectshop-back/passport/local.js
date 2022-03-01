@@ -17,7 +17,6 @@ module.exports = () =>{
                 return done(null,false,{reason:'존재하지 않는 이메일입니다.'});
             }
             const compare = await bcrypt.compare(password,user.password);
-            console.log(compare);
             if(compare){
                 return done(null,user);
             }
