@@ -11,6 +11,9 @@ export const initialized = {
     signUpLoading:false, //회원가입 시도중
     signUpDone: false,
     signUpError:null,
+    loadMyInfoLoading:false, //유저정보 로드 시도중
+    loadMyInfoDone: false,
+    loadMyInfoError:null,
     me:null,
     signUpData:{},
     loginData:{}
@@ -29,6 +32,10 @@ export const GITHUB_REQUEST = 'GITHUB_REQUEST';
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
@@ -108,6 +115,24 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
             draft.logOutDone=false;
             draft.logOutLoading=false;
             draft.logOutError=action.error;
+            break;
+        case LOAD_MY_INFO_REQUEST:
+            draft.loadMyInfoLoading=true;
+            draft.loadMyInfoDone=false;
+            draft.loadMyInfoError = null;
+            break;
+        case LOAD_MY_INFO_SUCCESS:
+            draft.loadMyInfoDone=true;
+            draft.loadMyInfoLoading=false;
+            draft.loadMyInfoError = null;
+            draft.logInDone = true;
+            draft.me=action.data;
+            break;
+        case LOAD_MY_INFO_FAILURE:
+            draft.loadMyInfoDone=false;
+            draft.loadMyInfoLoading=false;
+            draft.loadMyInfoError=action.error;
+            draft.me=null;
             break;
         default:
             break;

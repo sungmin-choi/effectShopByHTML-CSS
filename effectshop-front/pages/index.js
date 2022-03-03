@@ -4,11 +4,15 @@ import Header from '../components/Header'
 import Items from '../components/Items'
 import { useEffect } from 'react'
 import {LOAD_EFFECTS_REQUEST } from '../reducers/effect'
+import {LOAD_MY_INFO_REQUEST} from '../reducers/user'
 import { useDispatch,useSelector} from 'react-redux'
 export default function Home() {
   const dispatch = useDispatch();
   const {mainEffects,loadEffectsLoading,hasMoreEffects} = useSelector((state)=>state.effect);
   useEffect(()=>{
+    dispatch({
+      type:LOAD_MY_INFO_REQUEST
+    })
     dispatch({
       type:LOAD_EFFECTS_REQUEST
     })

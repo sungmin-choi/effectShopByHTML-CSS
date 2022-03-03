@@ -57,7 +57,7 @@ const Detail= () => {
       <Container data={payLoad}>
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payLoad.html}}></div>
       </Container>
-      <Divider  plain><h1>{`Author: < ${payLoad.user.nickname} >`}</h1></Divider>
+      <Divider  plain><h1>{`Author: < ${payLoad.User.nickname} >`}</h1></Divider>
       <CodeContainer>
       <h1>HTML</h1>
       <Highlighter code={payLoad.html} language="html"/>

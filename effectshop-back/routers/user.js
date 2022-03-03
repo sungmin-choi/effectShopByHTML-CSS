@@ -49,6 +49,35 @@ router.post('/logout',isLoggedIn,(req,res,next)=>{
     res.status(200).send('ok');
 })
 
+router.get('/',async(req,res,next)=>{
+    try{
+        if(req.user){
+            const user = await User.findOne({
+                where:{id:req.user.id},
+                attributes:['id','nickname','email'],
+                include:[{
+                    model: Effect,
+                    attributes:['id','title','html','css'],
+                    include:[{
+                        model: User,
+                        as: 'Likers'
+                    },{
+                        model: User,
+                        attributes: ['id','nickname']
+                    }]
+                }]
+            });
+            return res.status(200).json(user);
+        }else{
+            return res.status(200).json(null);
+        }
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+})
+
+
 router.post('/', isNotLoggedIn,async(req,res,next)=>{
     try{
     const exUser = await User.findOne({

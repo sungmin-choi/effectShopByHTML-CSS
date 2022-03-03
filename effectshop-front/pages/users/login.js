@@ -27,7 +27,7 @@ const Login = () => {
     },[me&&me.id,logInError]);
 
     const githubLogin = () =>{
-      window.open("http://localhost:3065/user/github", "_self");
+      window.open('http://localhost:3065/user/github','_self');
     }
     const onFinish = (values) => {
       const {email} = values;

@@ -10,7 +10,6 @@ module.exports = ()=>{
     },async (accessToken, refreshToken, profile, done)=>{
         try{
             const { name, id, email } = profile._json;
-            console.log(profile._json);
             const user = await User.findOne({
                 where:{
                     githubId:id,
