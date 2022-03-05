@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {isLoggedIn} = require('./middlewares');
 const {Effect,User} = require('../models');
-const effect = require('../models/effect');
 router.post('/', isLoggedIn, async(req,res,next)=>{
     try{
-        const effect = await Effect.create({
+        const newEffect = await Effect.create({
             title: req.body.title,
             html: req.body.html,
             css: req.body.css,
@@ -14,7 +13,7 @@ router.post('/', isLoggedIn, async(req,res,next)=>{
 
         const fullEffect = await Effect.findOne({
             where:{
-                id:effect.id
+                id:newEffect.id
             },
             include:[{
                 model:User
@@ -28,8 +27,38 @@ router.post('/', isLoggedIn, async(req,res,next)=>{
         console.error(error);
         next(error);
     }
-
 });
+
+router.get('/:effectId',async(req,res,next)=>{
+    try{
+        const effectDetail = await Effect.findOne({
+            where:{
+                id: req.params.effectId,
+            }
+        });
+        if(!effectDetail){
+            return res.status(403).send('없는 이펙트입니다.').redirect('http://localhost:3000');
+        }
+        const fullEffect = await Effect.findOne({
+            where:{
+                id: effectDetail.id
+            },
+            attributes:['id','title','html','css'],
+            include:[{
+                model: User,
+                as: 'Likers',
+                attributes: ['id']
+            },{
+                model: User,
+                attributes: ['id','nickname']
+            }]
+        });
+        return res.status(200).json(fullEffect);
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+})
 
 router.delete('/:effectId', isLoggedIn, async(req,res,next)=>{
     try{

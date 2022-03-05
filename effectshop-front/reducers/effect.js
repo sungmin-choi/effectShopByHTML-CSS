@@ -5,6 +5,10 @@ export const initialized = {
     loadEffectsLoading:false,
     loadEffectsDone:false,
     loadEffectsError:null,
+    loadEffectDetailLoading:false,
+    loadEffectDetailDone:false,
+    loadEffectDetailError:null,
+    effectDetail:null,
     removeEffectsLoading:false,
     removeEffectsDone:false,
     removeEffectsError:null,
@@ -12,6 +16,7 @@ export const initialized = {
     addEffectsDone:false,
     addEffectsError:null,
     hasMoreEffects:true,
+
 }
 
 const loadMoreEffects = () =>{
@@ -24,6 +29,10 @@ const loadMoreEffects = () =>{
 }
 export const loadEffects = loadMoreEffects();
 
+
+export const LOAD_EFFECT_DETAIL_REQUEST = "LOAD_EFFECT_DETAIL_REQUEST";
+export const LOAD_EFFECT_DETAIL_SUCCESS = "LOAD_EFFECT_DETAIL_SUCCESS";
+export const LOAD_EFFECT_DETAIL_FAILURE = "LOAD_EFFECT_DETAIL_FAILURE";
 
 export const ADD_EFFECTS_REQUEST = "ADD_EFFECTS_REQUEST";
 export const ADD_EFFECTS_SUCCESS = "ADD_EFFECTS_SUCCESS";
@@ -57,6 +66,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
         case LOAD_EFFECTS_REQUEST:
             draft.loadEffectsLoading = true;
             draft.loadEffectsDone = false;
+            draft.effectDetail = null;
             break;
         case LOAD_EFFECTS_SUCCESS:
             draft.loadEffectsDone = true;
@@ -68,6 +78,22 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.loadEffectsDone=false;
             draft.loadEffectsLoading=false;
             draft.loadEffectsError = action.error;
+            break;
+        case LOAD_EFFECT_DETAIL_REQUEST:
+            draft.loadEffectDetailLoading = true;
+            draft.loadEffectDetailDone = false;
+            draft.effectDetail = null;
+            break;
+        case LOAD_EFFECT_DETAIL_SUCCESS:
+            draft.loadEffectDetailDone = true;
+            draft.loadEffectDetailLoading = false;
+            draft.effectDetail = action.data;
+            break;
+        case LOAD_EFFECT_DETAIL_FAILURE:
+            draft.loadEffectDetailDone=false;
+            draft.loadEffectDetailLoading=false;
+            draft.effectDetail =null;
+            draft.loadEffectDetailError = action.error;
             break;
         case ADD_EFFECTS_REQUEST:
             draft.addEffectsLoading = true;

@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const effectRouter = require('./routers/effect');
 const userRouter = require('./routers/user');
+const effectsRouter = require('./routers/effects');
 const db = require('./models');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -39,7 +40,7 @@ app.use(cors({
   origin:'http://localhost:3000',
   credentials:true,
 }));
-
+app.use('/effects' ,effectsRouter);
 app.use('/effect',effectRouter);
 app.use('/user', userRouter);
 

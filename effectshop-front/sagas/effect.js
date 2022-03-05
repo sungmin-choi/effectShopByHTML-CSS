@@ -1,26 +1,51 @@
 import { all,fork, takeLatest,put,delay,call} from "@redux-saga/core/effects";
 import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
          ADD_EFFECTS_REQUEST,ADD_EFFECTS_SUCCESS,ADD_EFFECTS_FAILURE ,
-        REMOVE_EFFECTS_REQUEST,REMOVE_EFFECTS_SUCCESS,REMOVE_EFFECTS_FAILURE} from "../reducers/effect";
-import { ADD_EFFECT_TO_ME,REMOVE_EFFECT_OF_ME} from "../reducers/user";
-import {loadEffects} from '../reducers/effect'
+        REMOVE_EFFECTS_REQUEST,REMOVE_EFFECTS_SUCCESS,REMOVE_EFFECTS_FAILURE,
+        LOAD_EFFECT_DETAIL_REQUEST,LOAD_EFFECT_DETAIL_SUCCESS,LOAD_EFFECT_DETAIL_FAILURE} from "../reducers/effect";
+import { ADD_EFFECT_TO_ME,LOAD_MY_INFO_FAILURE,REMOVE_EFFECT_OF_ME} from "../reducers/user";
+//import {loadEffects} from '../reducers/effect'
 import axios from "axios";
-function loadEffectAPI(){//4
-    return axios.get('/effect');
+function loadEffectsAPI(){//4
+    return axios.get('/effects');
 }
 
-function* loadEffect(action){//3
+function* loadEffects(action){//3
     try{
-    //const result = yield call(logInAPI,action.data);//call: 비동기에서 await 같은 개념이다.
-    yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+    const result = yield call(loadEffectsAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+
     yield put({
         type:LOAD_EFFECTS_SUCCESS,
-        data: loadEffects(4),
+        data: result.data,
     })
     }catch(err){
         console.log(err);
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
             type:LOAD_EFFECTS_FAILURE,
+            error:err.response.data,
+        })
+    }
+}
+
+
+function loadEffectAPI(data){//4
+    return axios.get(`/effect/${data}`);
+}
+
+function* loadEffect(action){//3
+    try{
+    const result = yield call(loadEffectAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+
+    yield put({
+        type:LOAD_EFFECT_DETAIL_SUCCESS,
+        data: result.data,
+    })
+    }catch(err){
+        console.log(err);
+        yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
+            type:LOAD_MY_INFO_FAILURE,
             error:err.response.data,
         })
     }
@@ -72,7 +97,7 @@ function* removeEffect(action){//3
     }catch(err){
         console.error(err);
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
-            type:ADD_EFFECTS_FAILURE,
+            type:REMOVE_EFFECTS_FAILURE,
             error:err.response.data,
         })
     }
@@ -80,7 +105,7 @@ function* removeEffect(action){//3
 
 
 function* watchLoadEffects(){
-    yield takeLatest(LOAD_EFFECTS_REQUEST,loadEffect);
+    yield takeLatest(LOAD_EFFECTS_REQUEST,loadEffects);
 }
 function* watchAddEffect(){
     yield takeLatest(ADD_EFFECTS_REQUEST,addEffect);
@@ -88,12 +113,15 @@ function* watchAddEffect(){
 function* watchRemoveEffect(){
     yield takeLatest(REMOVE_EFFECTS_REQUEST,removeEffect);
 }
-
+function* watchLoadEffect(){
+    yield takeLatest(LOAD_EFFECT_DETAIL_REQUEST,loadEffect)
+}
 
 export default function* effectSaga(){
     yield all([
         fork(watchLoadEffects),
         fork(watchAddEffect),
         fork(watchRemoveEffect),
+        fork(watchLoadEffect),
     ])
 }
