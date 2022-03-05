@@ -73,6 +73,7 @@ const Item = ({payload,edit}) => {
     <EffectCard  
     title={payload.title} 
     data={payload} 
+    //<Link href={`/detail/${payload.id}`}><a>Detail</a></Link>
     extra={<Link href={`/detail/${payload.id}`}><a>Detail</a></Link>}
     >
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payload.html}}></div>

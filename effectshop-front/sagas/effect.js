@@ -45,7 +45,7 @@ function* loadEffect(action){//3
     }catch(err){
         console.log(err);
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
-            type:LOAD_MY_INFO_FAILURE,
+            type:LOAD_EFFECT_DETAIL_FAILURE,
             error:err.response.data,
         })
     }

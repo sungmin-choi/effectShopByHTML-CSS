@@ -37,7 +37,7 @@ router.get('/:effectId',async(req,res,next)=>{
             }
         });
         if(!effectDetail){
-            return res.status(403).send('없는 이펙트입니다.').redirect('http://localhost:3000');
+            return res.status(404).send('error');
         }
         const fullEffect = await Effect.findOne({
             where:{

@@ -1,4 +1,5 @@
 import React,{useState,useEffect}from 'react'
+import { useSelector,useDispatch } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
 import { ProjectTitle } from '../../styles/loginStyle'
@@ -7,6 +8,7 @@ import { Divider } from 'antd'
 import styled from 'styled-components'
 import dummyData from '../../dummyData'
 import Highlighter from '../../components/Highlighter'
+import {LOAD_EFFECT_DETAIL_REQUEST} from '../../reducers/effect'
 const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -27,46 +29,45 @@ const CodeContainer = styled.section`
 `
 
 const Detail= () => {
+  const dispatch = useDispatch();
+  const {loadEffectDetailLoading,
+         loadEffectDetailDone,
+         loadEffectDetailError,
+          effectDetail} = useSelector((state)=>state.effect);
   const router  = useRouter();
-  const [payLoad,setPayLoad] = useState({});
-  const [isLoading,setIsLoading] = useState(true);
   useEffect(()=>{
     if(!router.isReady) return;
     const {id} = router.query;
-    const data = dummyData.filter((ele)=>ele.id === id);
-    setPayLoad(...data);
-    setIsLoading(false);
+    dispatch({
+      type: LOAD_EFFECT_DETAIL_REQUEST,
+      data:id,
+    })
   },[router.isReady])
-  if(isLoading){
-    return (
-      <>
-      <Head>
-      <title>Effect Shop | please wait</title>
-      </Head>
-      <h1>Loading</h1>
-      </>
-    )
-  }else{
+  if(loadEffectDetailDone && effectDetail){
     return (
       <div>
       <Head>
-        <title>Effect Shop | {payLoad.title}</title>
+        <title>Effect Shop | {effectDetail.title}</title>
       </Head>
       <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
-      <Divider plain style={{marginTop:'3rem'}}><h1>{`Title: < ${payLoad.title} >`}</h1></Divider>
-      <Container data={payLoad}>
-      <div className="effect-container"  dangerouslySetInnerHTML={{__html:payLoad.html}}></div>
+      <Divider plain style={{marginTop:'3rem'}}><h1>{`Title: < ${effectDetail.title} >`}</h1></Divider>
+      <Container data={effectDetail}>
+      <div className="effect-container"  dangerouslySetInnerHTML={{__html:effectDetail.html}}></div>
       </Container>
-      <Divider  plain><h1>{`Author: < ${payLoad.User.nickname} >`}</h1></Divider>
+      <Divider  plain><h1>{`Author: < ${effectDetail.User.nickname} >`}</h1></Divider>
       <CodeContainer>
       <h1>HTML</h1>
-      <Highlighter code={payLoad.html} language="html"/>
+      <Highlighter code={effectDetail.html} language="html"/>
       <h1>CSS</h1>
-      <Highlighter code={payLoad.css} language="css"/>
+      <Highlighter code={effectDetail.css} language="css"/>
       </CodeContainer>
       </div>
       )
     }
+  if(loadEffectDetailError){
+    router.push("/404")
+  }
+    return null
 }
 
 export default Detail
