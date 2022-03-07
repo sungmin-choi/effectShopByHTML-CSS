@@ -31,11 +31,15 @@ export default function Home() {
 
   useEffect(()=>{
     const handleScroll = ()=>{
+      const lastId = mainEffects[mainEffects.length-1]?.id; 
+
       if(window.scrollY+document.documentElement.clientHeight>document.documentElement.scrollHeight-100){
         if(!loadEffectsLoading && hasMoreEffects){
           dispatch({
-            type:LOAD_EFFECTS_REQUEST
+            type:LOAD_EFFECTS_REQUEST,
+            lastId
           })
+          console.log(lastId);
         }
       }
     }
@@ -43,7 +47,7 @@ export default function Home() {
     return ()=>{
       window.removeEventListener('scroll',handleScroll);
     }
-  },[loadEffectsLoading])
+  },[loadEffectsLoading,hasMoreEffects,mainEffects])
 
   return (
     <>

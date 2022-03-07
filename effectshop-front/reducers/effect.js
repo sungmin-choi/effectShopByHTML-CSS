@@ -85,7 +85,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.loadEffectsDone = true;
             draft.loadEffectsLoading = false;
             draft.mainEffects = draft.mainEffects.concat(action.data);
-            draft.hasMoreEffects = draft.mainEffects.length<16;
+            draft.hasMoreEffects = action.data.length === 4;
             break;
         case LOAD_EFFECTS_FAILURE:
             draft.loadEffectsDone=false;
@@ -116,7 +116,6 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.addEffectsDone = true;
             draft.addEffectsLoading = false;
             draft.mainEffects = draft.mainEffects.push(action.data);
-            draft.hasMoreEffects = draft.mainEffects.length<16;
             break;
         case ADD_EFFECTS_FAILURE:
             draft.addEffectsDone=false;

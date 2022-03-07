@@ -10,13 +10,13 @@ import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
 import { ADD_EFFECT_TO_ME,LOAD_MY_INFO_FAILURE,REMOVE_EFFECT_OF_ME} from "../reducers/user";
 //import {loadEffects} from '../reducers/effect'
 import axios from "axios";
-function loadEffectsAPI(){//4
-    return axios.get('/effects');
+function loadEffectsAPI(data){//4
+    return axios.get(`/effects?lastId=${data || 0}`);
 }
 
 function* loadEffects(action){//3
     try{
-    const result = yield call(loadEffectsAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    const result = yield call(loadEffectsAPI,action.lastId);//call: 비동기에서 await 같은 개념이다.
     //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
 
     yield put({
