@@ -126,6 +126,8 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
         case LIKE_EFFECT_REQUEST:
             draft.likeEffectLoading = true;
             draft.likeEffectDone = false;
+            draft.likeEffectError = false;
+            draft.unLikeEffectError = false;
             break;
         case LIKE_EFFECT_SUCCESS:
             const effect = draft.mainEffects.find((v)=>v.id === action.data.EffectId);
@@ -141,6 +143,8 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
         case UNLIKE_EFFECT_REQUEST:
             draft.unLikeEffectLoading = true;
             draft.unLikeEffectDone = false;
+            draft.likeEffectError = false;
+            draft.unLikeEffectError = false;
             break;
         case UNLIKE_EFFECT_SUCCESS:{
             const effect = draft.mainEffects.find((v)=>v.id === action.data.EffectId);

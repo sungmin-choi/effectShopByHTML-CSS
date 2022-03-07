@@ -8,7 +8,8 @@ import {LOAD_MY_INFO_REQUEST} from '../reducers/user'
 import { useDispatch,useSelector} from 'react-redux'
 export default function Home() {
   const dispatch = useDispatch();
-  const {mainEffects,loadEffectsLoading,hasMoreEffects} = useSelector((state)=>state.effect);
+  const {mainEffects,loadEffectsLoading,hasMoreEffects
+        ,likeEffectError,unLikeEffectError} = useSelector((state)=>state.effect);
   useEffect(()=>{
     dispatch({
       type:LOAD_MY_INFO_REQUEST
@@ -17,6 +18,16 @@ export default function Home() {
       type:LOAD_EFFECTS_REQUEST
     })
   },[])
+
+  useEffect(()=>{
+    if(likeEffectError){
+      alert(likeEffectError);
+    }
+    if(unLikeEffectError){
+      alert(unLikeEffectError);
+    }
+
+  },[likeEffectError,unLikeEffectError])
 
   useEffect(()=>{
     const handleScroll = ()=>{

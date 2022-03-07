@@ -26,14 +26,6 @@ const Container = styled.div`
 
 //{dummyData.map((item)=> <Item key={item.id} loadPay={item}/>)}
 const Items = ({isProfile,effects}) => {
-  const {me} = useSelector((state)=>state.user);
-  
-  // useEffect(()=>{
-  //   if(isProfile && (me&&me.id)){
-  //     setItems(items.filter((item)=>item.user.id ===me.id))
-  //   }
-  // },[])
-  
   return (
     <Container>
       {isProfile? effects.map((item)=> <Item key={item.id} payload={item} edit={true} />):
