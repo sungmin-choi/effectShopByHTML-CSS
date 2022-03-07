@@ -6,10 +6,12 @@ import { useEffect } from 'react'
 import {LOAD_EFFECTS_REQUEST } from '../reducers/effect'
 import {LOAD_MY_INFO_REQUEST} from '../reducers/user'
 import { useDispatch,useSelector} from 'react-redux'
+import { useRouter } from 'next/router'
 export default function Home() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const {mainEffects,loadEffectsLoading,hasMoreEffects
-        ,likeEffectError,unLikeEffectError} = useSelector((state)=>state.effect);
+        ,likeEffectError,unLikeEffectError,searchEffectsError} = useSelector((state)=>state.effect);
   useEffect(()=>{
     dispatch({
       type:LOAD_MY_INFO_REQUEST
@@ -26,8 +28,12 @@ export default function Home() {
     if(unLikeEffectError){
       alert(unLikeEffectError);
     }
+    if(searchEffectsError === 'No Search'){
+      console.log('hhh');
+      router.push('/');
+    }
 
-  },[likeEffectError,unLikeEffectError])
+  },[likeEffectError,unLikeEffectError,searchEffectsError])
 
   useEffect(()=>{
     const handleScroll = ()=>{
@@ -39,7 +45,6 @@ export default function Home() {
             type:LOAD_EFFECTS_REQUEST,
             lastId
           })
-          console.log(lastId);
         }
       }
     }

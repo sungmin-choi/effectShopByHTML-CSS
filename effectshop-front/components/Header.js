@@ -3,8 +3,8 @@ import { Input ,Divider} from 'antd';
 import styled from 'styled-components';
 import {screen} from '../styles/styleConstant';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import {SEARCH_EFFECTS_REQUEST} from '../reducers/effect'
 
 const DividerWrapper = styled.div`
   width: 90%;
@@ -49,10 +49,15 @@ const HeaderWrapper = styled.header`
 `
 
 const Header = () => {
-  const onSearch = useCallback(()=>{
-    console.log('search');
-  },[])
   const {me} = useSelector(state=>state.user);
+  const dispatch = useDispatch();
+  const onSearch = useCallback((value)=>{
+    dispatch({
+      type: SEARCH_EFFECTS_REQUEST,
+      data:value
+    })
+  },[])
+  
   return (
     <>
     <HeaderWrapper>

@@ -4,11 +4,9 @@ import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
         REMOVE_EFFECTS_REQUEST,REMOVE_EFFECTS_SUCCESS,REMOVE_EFFECTS_FAILURE,
         LOAD_EFFECT_DETAIL_REQUEST,LOAD_EFFECT_DETAIL_SUCCESS,LOAD_EFFECT_DETAIL_FAILURE, 
         LIKE_EFFECT_REQUEST,LIKE_EFFECT_SUCCESS,LIKE_EFFECT_FAILURE, 
-        UNLIKE_EFFECT_REQUEST,
-        UNLIKE_EFFECT_SUCCESS,
-        UNLIKE_EFFECT_FAILURE} from "../reducers/effect";
+        UNLIKE_EFFECT_REQUEST,UNLIKE_EFFECT_SUCCESS,UNLIKE_EFFECT_FAILURE,
+        SEARCH_EFFECTS_REQUEST,SEARCH_EFFECTS_SUCCESS,SEARCH_EFFECTS_FAILURE} from "../reducers/effect";
 import { ADD_EFFECT_TO_ME,LOAD_MY_INFO_FAILURE,REMOVE_EFFECT_OF_ME} from "../reducers/user";
-//import {loadEffects} from '../reducers/effect'
 import axios from "axios";
 function loadEffectsAPI(data){//4
     return axios.get(`/effects?lastId=${data || 0}`);
@@ -153,6 +151,29 @@ function* unLikeEffect(action){//3
     }
 }
 
+function searchEffectsAPI(data){//4
+    return axios.get(`/effects/search?keyword=${data}`);
+}
+
+function* searchEffects(action){//3
+    try{
+    const result = yield call(searchEffectsAPI,action.data);//call: 비동기에서 await 같은 개념이다.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+
+    yield put({
+        type:SEARCH_EFFECTS_SUCCESS,
+        data: result.data,
+    })
+    }catch(err){
+        console.error(err);
+        yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
+            type:SEARCH_EFFECTS_FAILURE,
+            error:err.response.data,
+        })
+    }
+}
+
+
 
 
 function* watchLoadEffects(){
@@ -173,6 +194,9 @@ function* watchLikeEffect(){
 function* watchUnLikeEffect(){
     yield takeLatest(UNLIKE_EFFECT_REQUEST, unLikeEffect);
 }
+function* watchSearchEffects(){
+    yield takeLatest(SEARCH_EFFECTS_REQUEST,searchEffects);
+}
 export default function* effectSaga(){
     yield all([
         fork(watchLoadEffects),
@@ -181,5 +205,6 @@ export default function* effectSaga(){
         fork(watchLoadEffect),
         fork(watchLikeEffect),
         fork(watchUnLikeEffect),
+        fork(watchSearchEffects),
     ])
 }

@@ -12,6 +12,9 @@ export const initialized = {
     removeEffectsLoading:false,
     removeEffectsDone:false,
     removeEffectsError:null,
+    searchEffectsLoading:false,
+    searchEffectsDone:false,
+    searchEffectsError:null,
     addEffectsLoading:false,
     addEffectsDone:false,
     addEffectsError:null,
@@ -34,6 +37,9 @@ const loadMoreEffects = () =>{
 }
 export const loadEffects = loadMoreEffects();
 
+export const SEARCH_EFFECTS_REQUEST = "SEARCH_EFFECTS_REQUSET";
+export const SEARCH_EFFECTS_SUCCESS = "SEARCH_EFFECTS_SUCCESS";
+export const SEARCH_EFFECTS_FAILURE = "SEARCH_EFFECTS_FAILURE";
 
 export const LIKE_EFFECT_REQUEST = "LIKE_EFFECT_REQUEST";
 export const LIKE_EFFECT_SUCCESS = "LIKE_EFFECT_SUCCESS";
@@ -91,6 +97,22 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.loadEffectsDone=false;
             draft.loadEffectsLoading=false;
             draft.loadEffectsError = action.error;
+            break;
+        case SEARCH_EFFECTS_REQUEST:
+            draft.searchEffectsLoading = true;
+            draft.searchEffectsDone = false;
+            draft.searchEffectsError = null;
+            break;
+        case SEARCH_EFFECTS_SUCCESS:
+            draft.searchEffectsDone = true;
+            draft.searchEffectsLoading = false;
+            draft.mainEffects = [...action.data];
+            draft.searchEffectsError = null;
+            break;
+        case SEARCH_EFFECTS_FAILURE:
+            draft.searchEffectsDone=false;
+            draft.searchEffectsLoading=false;
+            draft.searchEffectsError = action.error;
             break;
         case LOAD_EFFECT_DETAIL_REQUEST:
             draft.loadEffectDetailLoading = true;
