@@ -6,7 +6,6 @@ import { ProjectTitle } from '../../styles/loginStyle'
 import { useRouter } from 'next/router'
 import { Divider } from 'antd'
 import styled from 'styled-components'
-import dummyData from '../../dummyData'
 import Highlighter from '../../components/Highlighter'
 import {LOAD_EFFECT_DETAIL_REQUEST} from '../../reducers/effect'
 const Container = styled.div`
@@ -27,7 +26,6 @@ const CodeContainer = styled.section`
   margin: auto;
   padding-bottom: 20px;
 `
-
 const Detail= () => {
   const dispatch = useDispatch();
   const {loadEffectDetailLoading,

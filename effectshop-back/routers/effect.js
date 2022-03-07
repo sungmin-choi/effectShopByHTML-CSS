@@ -19,10 +19,47 @@ router.post('/', isLoggedIn, async(req,res,next)=>{
                 model:User
             },{
                 model:User,
-                as: 'Likers'
+                as: 'Likers',
+                attributes:['id']
             }]
         })
         return res.status(201).json(fullEffect);
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+});
+
+router.patch('/:effectId/like',isLoggedIn,async(req,res,next)=>{
+    try{
+        const effect = await Effect.findOne({
+            where:{
+                id: req.params.effectId
+            }
+        });
+        if(!effect){
+            return res.status(403).send('좋아요한 이펙트가 존재하지 않습니다.');
+        }
+        await effect.addLikers(req.user.id);
+        return res.status(200).json({EffectId:Number(req.params.effectId),UserId:Number(req.user.id)});
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+});
+
+router.delete('/:effectId/like',async(req,res,next)=>{
+    try{
+        const effect = await Effect.findOne({
+            where:{
+                id: req.params.effectId
+            }
+        });
+        if(!effect){
+            return res.status(403).send('안좋아요한 이펙트가 존재하지 않습니다.');
+        }
+        await effect.removeLikers(req.user.id);
+        return res.status(200).json({EffectId:Number(req.params.effectId),UserId:Number(req.user.id)});
     }catch(error){
         console.error(error);
         next(error);

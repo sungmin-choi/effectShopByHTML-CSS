@@ -5,7 +5,7 @@ const {Effect,User} = require('../models');
 router.get('/',async(req,res,next)=>{
     try {
         const effects = await Effect.findAll({
-            limit:4,
+            limit:10,
             order:[['createdAt','DESC']],
             atrributes:['id','title','html','css'],
             include:[{

@@ -16,7 +16,12 @@ export const initialized = {
     addEffectsDone:false,
     addEffectsError:null,
     hasMoreEffects:true,
-
+    unLikeEffectLoading:false,
+    unLikeEffectDone:false,
+    unLikeEffectError:null,
+    likeEffectLoading:false,
+    likeEffectDone:false,
+    likeEffectError:null,
 }
 
 const loadMoreEffects = () =>{
@@ -29,6 +34,14 @@ const loadMoreEffects = () =>{
 }
 export const loadEffects = loadMoreEffects();
 
+
+export const LIKE_EFFECT_REQUEST = "LIKE_EFFECT_REQUEST";
+export const LIKE_EFFECT_SUCCESS = "LIKE_EFFECT_SUCCESS";
+export const LIKE_EFFECT_FAILURE = "LIKE_EFFECT_FAILURE";
+
+export const UNLIKE_EFFECT_REQUEST = "UNLIKE_EFFECT_REQUEST";
+export const UNLIKE_EFFECT_SUCCESS = "UNLIKE_EFFECT_SUCCESS";
+export const UNLIKE_EFFECT_FAILURE = "UNLIKE_EFFECT_FAILURE";
 
 export const LOAD_EFFECT_DETAIL_REQUEST = "LOAD_EFFECT_DETAIL_REQUEST";
 export const LOAD_EFFECT_DETAIL_SUCCESS = "LOAD_EFFECT_DETAIL_SUCCESS";
@@ -109,6 +122,37 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.addEffectsDone=false;
             draft.addEffectsLoading=false;
             draft.addEffectsError = action.error;
+            break;
+        case LIKE_EFFECT_REQUEST:
+            draft.likeEffectLoading = true;
+            draft.likeEffectDone = false;
+            break;
+        case LIKE_EFFECT_SUCCESS:
+            const effect = draft.mainEffects.find((v)=>v.id === action.data.EffectId);
+            effect.Likers.push({id:action.data.UserId});
+            draft.likeEffectDone = true;
+            draft.likeEffectLoading = false;
+            break;
+        case LIKE_EFFECT_FAILURE:
+            draft.likeEffectDone=false;
+            draft.likeEffectLoading=false;
+            draft.likeEffectError = action.error;
+            break;
+        case UNLIKE_EFFECT_REQUEST:
+            draft.unLikeEffectLoading = true;
+            draft.unLikeEffectDone = false;
+            break;
+        case UNLIKE_EFFECT_SUCCESS:{
+            const effect = draft.mainEffects.find((v)=>v.id === action.data.EffectId);
+            effect.Likers = effect.Likers.filter((v)=>v.id !== action.data.UserId);
+            draft.unLikeEffectDone = true;
+            draft.unLikeEffectLoading = false;
+            break;
+        }
+        case UNLIKE_EFFECT_FAILURE:
+            draft.unLikeEffectDone=false;
+            draft.unLikeEffectLoading=false;
+            draft.unLikeEffectError = action.error;
             break;
         default:
             return;

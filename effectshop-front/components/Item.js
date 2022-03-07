@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card,Tag ,Button} from 'antd';
-import { HeartFilled } from '@ant-design/icons';
+import { HeartFilled, HeartOutlined} from '@ant-design/icons';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import {REMOVE_EFFECTS_REQUEST} from '../reducers/effect';
+import { useDispatch,useSelector } from 'react-redux';
+import {LIKE_EFFECT_REQUEST, REMOVE_EFFECTS_REQUEST, UNLIKE_EFFECT_REQUEST} from '../reducers/effect';
+
+const HeartTag = styled(Tag)`
+  cursor: pointer;
+`
 const DeleteBtn = styled(Button)`
   background-color: red;
   border-color: red;
@@ -60,6 +64,24 @@ const EffectCard = styled(Card)`
 `
 const Item = ({payload,edit}) => {
   const dispatch = useDispatch();
+
+  const id = useSelector((state)=>state.user.me?.id);
+  const {likeEffectError,unLikeEffectError, mainEffects} = useSelector((state)=>state.effect);
+
+  const unLikeEffect = () =>{
+    dispatch({
+      type: UNLIKE_EFFECT_REQUEST,
+      data: payload.id
+    })
+  }
+
+  const likeEffect = () =>{
+    dispatch({
+      type: LIKE_EFFECT_REQUEST,
+      data: payload.id
+    })
+  }
+  const hasLike = payload.Likers.find((v)=>v.id===id);
   const deleteEffect = ()=>{
     const result =window.confirm('정말로 지우시겠습니까?')
     if(result){
@@ -69,6 +91,7 @@ const Item = ({payload,edit}) => {
       })
     }
   }
+  
   return (
     <EffectCard  
     title={payload.title} 
@@ -79,7 +102,8 @@ const Item = ({payload,edit}) => {
       <div className="effect-container"  dangerouslySetInnerHTML={{__html:payload.html}}></div>
     <UserInfo>
     <Tag >{`Author: ${payload.User.nickname}`}</Tag>
-    <Tag ><HeartFilled/>{payload.Likers.length}</Tag>
+    <HeartTag >{hasLike?<HeartFilled onClick={unLikeEffect} />:
+                        <HeartOutlined onClick={likeEffect} />}{payload.Likers.length}</HeartTag>
     </UserInfo>
     {edit? <><DeleteBtn onClick={deleteEffect}>삭제하기</DeleteBtn>
               <EditBtn>수정하기</EditBtn>
