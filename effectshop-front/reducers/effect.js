@@ -162,7 +162,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
         case ADD_EFFECTS_SUCCESS:
             draft.addEffectsDone = true;
             draft.addEffectsLoading = false;
-            draft.mainEffects = draft.mainEffects.push(action.data);
+            draft.mainEffects.unshift(action.data);
             break;
         case ADD_EFFECTS_FAILURE:
             draft.addEffectsDone=false;

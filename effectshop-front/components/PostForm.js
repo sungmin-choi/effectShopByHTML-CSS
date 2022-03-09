@@ -52,6 +52,7 @@ const PostForm = () => {
     setHtml('');
     setCss('');
     setTitle('');
+    console.log('jjj');
   }
 
   const initialHtml = `<div class="body">

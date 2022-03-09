@@ -13,16 +13,18 @@ router.post('/', isLoggedIn, async(req,res,next)=>{
 
         const fullEffect = await Effect.findOne({
             where:{
-                id:newEffect.id
+                id: newEffect.id
             },
+            attributes:['id','title','html','css'],
             include:[{
-                model:User
-            },{
-                model:User,
+                model: User,
                 as: 'Likers',
-                attributes:['id']
+                attributes: ['id']
+            },{
+                model: User,
+                attributes: ['id','nickname']
             }]
-        })
+        });
         return res.status(201).json(fullEffect);
     }catch(error){
         console.error(error);
