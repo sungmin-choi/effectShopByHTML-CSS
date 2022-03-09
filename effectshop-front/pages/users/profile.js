@@ -15,6 +15,7 @@ const Containner = styled.div`
   padding-top: 4rem;
   width: 90%;
   margin:auto;
+  
 `
 
 const LogOutBtn = styled(Button)`

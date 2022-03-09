@@ -5,7 +5,8 @@ import { LOAD_EFFECTS_REQUEST, LOAD_EFFECTS_SUCCESS,LOAD_EFFECTS_FAILURE,
         LOAD_EFFECT_DETAIL_REQUEST,LOAD_EFFECT_DETAIL_SUCCESS,LOAD_EFFECT_DETAIL_FAILURE, 
         LIKE_EFFECT_REQUEST,LIKE_EFFECT_SUCCESS,LIKE_EFFECT_FAILURE, 
         UNLIKE_EFFECT_REQUEST,UNLIKE_EFFECT_SUCCESS,UNLIKE_EFFECT_FAILURE,
-        SEARCH_EFFECTS_REQUEST,SEARCH_EFFECTS_SUCCESS,SEARCH_EFFECTS_FAILURE} from "../reducers/effect";
+        SEARCH_EFFECTS_REQUEST,SEARCH_EFFECTS_SUCCESS,SEARCH_EFFECTS_FAILURE,
+        FIRST_LOAD_EFFECTS_REQUEST,FIRST_LOAD_EFFECTS_SUCCESS,FIRST_LOAD_EFFECTS_FAILURE} from "../reducers/effect";
 import { ADD_EFFECT_TO_ME,LOAD_MY_INFO_FAILURE,REMOVE_EFFECT_OF_ME} from "../reducers/user";
 import axios from "axios";
 function loadEffectsAPI(data){//4
@@ -48,6 +49,28 @@ function* loadEffect(action){//3
         console.error(err);
         yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
             type:LOAD_EFFECT_DETAIL_FAILURE,
+            error:err.response.data,
+        })
+    }
+}
+
+function firstLoadEffectsAPI(){//4
+    return axios.get(`/effects/first`);
+}
+
+function* firstLoadEffects(){//3
+    try{
+    const result = yield call(firstLoadEffectsAPI);//call: 비동기에서 await 같은 개념이다.
+    //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
+
+    yield put({
+        type:FIRST_LOAD_EFFECTS_SUCCESS,
+        data: result.data,
+    })
+    }catch(err){
+        console.error(err);
+        yield put({ // redux 액션으로 보내줌. put:dispatch라고 생각하면 편하다.
+            type:FIRST_LOAD_EFFECTS_FAILURE,
             error:err.response.data,
         })
     }
@@ -177,6 +200,9 @@ function* searchEffects(action){//3
 
 
 function* watchLoadEffects(){
+    yield takeLatest(FIRST_LOAD_EFFECTS_REQUEST,firstLoadEffects);
+}
+function* watchFirstLoadEffects(){
     yield takeLatest(LOAD_EFFECTS_REQUEST,loadEffects);
 }
 function* watchAddEffect(){
@@ -200,6 +226,7 @@ function* watchSearchEffects(){
 export default function* effectSaga(){
     yield all([
         fork(watchLoadEffects),
+        fork(watchFirstLoadEffects),
         fork(watchAddEffect),
         fork(watchRemoveEffect),
         fork(watchLoadEffect),

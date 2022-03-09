@@ -3,12 +3,10 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import Items from '../components/Items'
 import { useEffect } from 'react'
-import {LOAD_EFFECTS_REQUEST } from '../reducers/effect'
+import {LOAD_EFFECTS_REQUEST,FIRST_LOAD_EFFECTS_REQUEST } from '../reducers/effect'
 import {LOAD_MY_INFO_REQUEST} from '../reducers/user'
 import { useDispatch,useSelector} from 'react-redux'
-import { useRouter } from 'next/router'
 export default function Home() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const {mainEffects,loadEffectsLoading,hasMoreEffects
         ,likeEffectError,unLikeEffectError,searchEffectsError} = useSelector((state)=>state.effect);
@@ -17,7 +15,7 @@ export default function Home() {
       type:LOAD_MY_INFO_REQUEST
     })
     dispatch({
-      type:LOAD_EFFECTS_REQUEST
+      type:FIRST_LOAD_EFFECTS_REQUEST
     })
   },[])
 
@@ -28,17 +26,12 @@ export default function Home() {
     if(unLikeEffectError){
       alert(unLikeEffectError);
     }
-    if(searchEffectsError === 'No Search'){
-      console.log('hhh');
-      router.push('/');
-    }
 
   },[likeEffectError,unLikeEffectError,searchEffectsError])
 
   useEffect(()=>{
     const handleScroll = ()=>{
       const lastId = mainEffects[mainEffects.length-1]?.id; 
-
       if(window.scrollY+document.documentElement.clientHeight>document.documentElement.scrollHeight-100){
         if(!loadEffectsLoading && hasMoreEffects){
           dispatch({

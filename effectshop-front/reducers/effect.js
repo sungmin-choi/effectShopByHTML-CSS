@@ -5,6 +5,9 @@ export const initialized = {
     loadEffectsLoading:false,
     loadEffectsDone:false,
     loadEffectsError:null,
+    firstLoadEffectsLoading:false,
+    firstLoadEffectsDone:false,
+    firstLoadEffectsError:null,
     loadEffectDetailLoading:false,
     loadEffectDetailDone:false,
     loadEffectDetailError:null,
@@ -57,6 +60,10 @@ export const ADD_EFFECTS_REQUEST = "ADD_EFFECTS_REQUEST";
 export const ADD_EFFECTS_SUCCESS = "ADD_EFFECTS_SUCCESS";
 export const ADD_EFFECTS_FAILURE = "ADD_EFFECTS_FAILURE";
 
+export const FIRST_LOAD_EFFECTS_REQUEST = "FIRST_LOAD_EFFECTS_REQUEST";
+export const FIRST_LOAD_EFFECTS_SUCCESS = "FIRST_LOAD_EFFECTS_SUCCESS";
+export const FIRST_LOAD_EFFECTS_FAILURE = "FIRST_LOAD_EFFECTS_FAILURE";
+
 export const LOAD_EFFECTS_REQUEST = "LOAD_EFFECTS_REQUEST";
 export const LOAD_EFFECTS_SUCCESS = "LOAD_EFFECTS_SUCCESS";
 export const LOAD_EFFECTS_FAILURE = "LOAD_EFFECTS_FAILURE";
@@ -82,6 +89,23 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.removeEffectsLoading=false;
             draft.removeEffectsError = action.error;
             break;
+        case FIRST_LOAD_EFFECTS_REQUEST:
+            draft.firstLoadEffectsLoading = true;
+            draft.firstLoadEffectsDone = false;
+            draft.mainEffects =[];
+            draft.effectDetail = null;
+            break;
+        case FIRST_LOAD_EFFECTS_SUCCESS:
+            draft.firstLoadEffectsDone = true;
+            draft.firstLoadEffectsLoading = false;
+            draft.mainEffects.push(...action.data);
+            draft.hasMoreEffects = action.data.length === 4;
+            break;
+        case FIRST_LOAD_EFFECTS_FAILURE:
+            draft.firstLoadEffectsDone=false;
+            draft.firstLoadEffectsLoading=false;
+            draft.firstLoadEffectsError = action.error;
+            break;
         case LOAD_EFFECTS_REQUEST:
             draft.loadEffectsLoading = true;
             draft.loadEffectsDone = false;
@@ -102,6 +126,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.searchEffectsLoading = true;
             draft.searchEffectsDone = false;
             draft.searchEffectsError = null;
+            draft.hasMoreEffects = true;
             break;
         case SEARCH_EFFECTS_SUCCESS:
             draft.searchEffectsDone = true;
