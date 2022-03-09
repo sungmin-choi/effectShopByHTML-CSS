@@ -6,20 +6,14 @@ import { useEffect } from 'react'
 import {LOAD_EFFECTS_REQUEST,FIRST_LOAD_EFFECTS_REQUEST } from '../reducers/effect'
 import {LOAD_MY_INFO_REQUEST} from '../reducers/user'
 import { useDispatch,useSelector} from 'react-redux'
-export default function Home() {
+import wrapper from '../store/configureStore'
+import axios from 'axios'
+import {END} from 'redux-saga';
+function Home() {
   const dispatch = useDispatch();
   const {mainEffects,loadEffectsLoading,hasMoreEffects
         ,likeEffectError,unLikeEffectError,searchEffectsError,
           isSearch} = useSelector((state)=>state.effect);
-  useEffect(()=>{
-    dispatch({
-      type:LOAD_MY_INFO_REQUEST
-    })
-    dispatch({
-      type:FIRST_LOAD_EFFECTS_REQUEST
-    })
-  },[])
-
   useEffect(()=>{
     if(likeEffectError){
       alert(likeEffectError);
@@ -63,3 +57,23 @@ export default function Home() {
     </>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const cookie = req ? req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+  store.dispatch({
+    type: FIRST_LOAD_EFFECTS_REQUEST,
+  });
+  store.dispatch(END);
+  await store.sagaTask.toPromise();
+});
+
+
+
+export default Home;

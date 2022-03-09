@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Card,Tag ,Button} from 'antd';
 import { HeartFilled, HeartOutlined} from '@ant-design/icons';
 import Link from 'next/link';

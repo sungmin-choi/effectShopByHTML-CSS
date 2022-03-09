@@ -1,4 +1,4 @@
-import React,{useState,useEffect}from 'react'
+import React,{useEffect}from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -8,6 +8,8 @@ import { Divider } from 'antd'
 import styled from 'styled-components'
 import Highlighter from '../../components/Highlighter'
 import {LOAD_EFFECT_DETAIL_REQUEST} from '../../reducers/effect'
+import wrapper from '../../store/configureStore'
+import {END} from 'redux-saga';
 const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -33,14 +35,14 @@ const Detail= () => {
          loadEffectDetailError,
           effectDetail} = useSelector((state)=>state.effect);
   const router  = useRouter();
-  useEffect(()=>{
-    if(!router.isReady) return;
-    const {id} = router.query;
-    dispatch({
-      type: LOAD_EFFECT_DETAIL_REQUEST,
-      data:id,
-    })
-  },[router.isReady])
+  // useEffect(()=>{
+  //   if(!router.isReady) return;
+  //   const {id} = router.query;
+  //   dispatch({
+  //     type: LOAD_EFFECT_DETAIL_REQUEST,
+  //     data:id,
+  //   })
+  // },[router.isReady])
   if(loadEffectDetailDone && effectDetail){
     return (
       <div>
@@ -67,5 +69,24 @@ const Detail= () => {
   }
     return null
 }
+
+export async function getStaticPaths() {
+  return {
+    paths:[],
+    fallback: true,
+  };
+}
+
+
+export const getStaticProps =wrapper.getStaticProps((store) => async ({ params }) => {
+  store.dispatch({
+    type: LOAD_EFFECT_DETAIL_REQUEST,
+    data: params.id
+  });
+  store.dispatch(END);
+  await store.sagaTask.toPromise();
+});
+
+
 
 export default Detail

@@ -1,5 +1,4 @@
 import produce from "immer";
-import dummyData from "../dummyData";
 export const initialized = {
     mainEffects:[],
     loadEffectsLoading:false,

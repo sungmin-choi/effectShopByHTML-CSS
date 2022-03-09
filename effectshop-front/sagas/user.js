@@ -12,7 +12,6 @@ function logInAPI(data){//4
 function* logIn(action){//3
     try{
     const result = yield call(logInAPI,action.data);//call: 비동기에서 await 같은 개념이다.
-    console.log(result.data);
     //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
     yield put({
         type:LOG_IN_SUCCESS,

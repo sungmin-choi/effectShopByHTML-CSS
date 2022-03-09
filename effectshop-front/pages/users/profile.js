@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect} from 'react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProjectTitle } from '../../styles/loginStyle'
@@ -30,15 +30,6 @@ const LogOutBtn = styled(Button)`
   border-color: red;
   color: white;
   }
-`
-const LogOutLoadingBtn = styled(Button)`
-  position: absolute;
-  right: -12rem;
-  top:-3rem;
-  background-color: red;
-  border-color: red;
-  color: white;
-
 `
 
 const Profile= () => {

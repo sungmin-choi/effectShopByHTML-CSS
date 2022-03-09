@@ -1,10 +1,10 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect} from 'react'
 import Link from 'next/link';
 import { Container,Title,SubmitBtn,SignUpMessage,ProjectTitle,GithubBtn} from '../../styles/loginStyle';
-import { Form, Input,Divider,Button} from 'antd';
+import { Form, Input,Divider} from 'antd';
 import { useDispatch,useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { LOG_IN_REQUEST,GITHUB_REQUEST} from '../../reducers/user';
+import { LOG_IN_REQUEST} from '../../reducers/user';
 import { GithubOutlined } from '@ant-design/icons';
 
 

@@ -5,7 +5,6 @@ import {screen} from '../styles/styleConstant';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import {SEARCH_EFFECTS_REQUEST,FIRST_LOAD_EFFECTS_REQUEST} from '../reducers/effect'
-import { useRouter } from 'next/router';
 
 const DividerWrapper = styled.div`
   width: 90%;

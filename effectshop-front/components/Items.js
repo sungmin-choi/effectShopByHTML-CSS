@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
-import dummyData from '../dummyData';
 import Item from './Item';
 import {screen} from '../styles/styleConstant';
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
