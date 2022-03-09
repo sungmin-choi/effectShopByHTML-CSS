@@ -9,7 +9,8 @@ import { useDispatch,useSelector} from 'react-redux'
 export default function Home() {
   const dispatch = useDispatch();
   const {mainEffects,loadEffectsLoading,hasMoreEffects
-        ,likeEffectError,unLikeEffectError,searchEffectsError} = useSelector((state)=>state.effect);
+        ,likeEffectError,unLikeEffectError,searchEffectsError,
+          isSearch} = useSelector((state)=>state.effect);
   useEffect(()=>{
     dispatch({
       type:LOAD_MY_INFO_REQUEST
@@ -33,7 +34,7 @@ export default function Home() {
     const handleScroll = ()=>{
       const lastId = mainEffects[mainEffects.length-1]?.id; 
       if(window.scrollY+document.documentElement.clientHeight>document.documentElement.scrollHeight-100){
-        if(!loadEffectsLoading && hasMoreEffects){
+        if(!loadEffectsLoading && hasMoreEffects && !isSearch){
           dispatch({
             type:LOAD_EFFECTS_REQUEST,
             lastId
@@ -45,7 +46,7 @@ export default function Home() {
     return ()=>{
       window.removeEventListener('scroll',handleScroll);
     }
-  },[loadEffectsLoading,hasMoreEffects,mainEffects])
+  },[loadEffectsLoading,hasMoreEffects,mainEffects,isSearch])
 
   return (
     <>

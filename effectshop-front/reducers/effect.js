@@ -18,6 +18,7 @@ export const initialized = {
     searchEffectsLoading:false,
     searchEffectsDone:false,
     searchEffectsError:null,
+    isSearch:false,
     addEffectsLoading:false,
     addEffectsDone:false,
     addEffectsError:null,
@@ -94,6 +95,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.firstLoadEffectsDone = false;
             draft.mainEffects =[];
             draft.effectDetail = null;
+            draft.isSearch = false;
             break;
         case FIRST_LOAD_EFFECTS_SUCCESS:
             draft.firstLoadEffectsDone = true;
@@ -110,6 +112,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.loadEffectsLoading = true;
             draft.loadEffectsDone = false;
             draft.effectDetail = null;
+            draft.isSearch = false;
             break;
         case LOAD_EFFECTS_SUCCESS:
             draft.loadEffectsDone = true;
@@ -133,6 +136,7 @@ const reducer = (state=initialized,action) =>produce(state,(draft)=>{
             draft.searchEffectsLoading = false;
             draft.mainEffects = [...action.data];
             draft.searchEffectsError = null;
+            draft.isSearch = true;
             break;
         case SEARCH_EFFECTS_FAILURE:
             draft.searchEffectsDone=false;

@@ -63,22 +63,23 @@ router.get('/search',async(req,res,next)=>{
             where.title ={
                 [Op.like]: "%" + req.query.keyword + "%"
             }
+            const effects = await Effect.findAll({
+                where,
+                order:[['createdAt','DESC']],
+                atrributes:['id','title','html','css'],
+                include:[{
+                    model: User,
+                    as: 'Likers',
+                    attributes:['id'],
+                },{
+                    model: User,
+                    attributes: ['id','nickname']
+                }]
+            })
+            return res.status(200).json(effects);
         };
-        const effects = await Effect.findAll({
-            where,
-            limit:4,
-            order:[['createdAt','DESC']],
-            atrributes:['id','title','html','css'],
-            include:[{
-                model: User,
-                as: 'Likers',
-                attributes:['id'],
-            },{
-                model: User,
-                attributes: ['id','nickname']
-            }]
-        })
-        return res.status(200).json(effects);
+        return res.status(200).json([]);
+
     }catch(error){
         console.error(error);
         next(error);
