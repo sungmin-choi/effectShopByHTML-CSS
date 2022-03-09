@@ -29,20 +29,10 @@ const CodeContainer = styled.section`
   padding-bottom: 20px;
 `
 const Detail= () => {
-  const dispatch = useDispatch();
-  const {loadEffectDetailLoading,
-         loadEffectDetailDone,
+  const {loadEffectDetailDone,
          loadEffectDetailError,
           effectDetail} = useSelector((state)=>state.effect);
   const router  = useRouter();
-  // useEffect(()=>{
-  //   if(!router.isReady) return;
-  //   const {id} = router.query;
-  //   dispatch({
-  //     type: LOAD_EFFECT_DETAIL_REQUEST,
-  //     data:id,
-  //   })
-  // },[router.isReady])
   if(loadEffectDetailDone && effectDetail){
     return (
       <div>
