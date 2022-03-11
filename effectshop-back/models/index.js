@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const effect = require('./effect');
+const user = require('./user');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 
@@ -11,10 +13,12 @@ const sequelize = new Sequelize(
   config
 ); 
 
-db.User = require('./user')(sequelize, Sequelize);
-db.Effect = require('./effect')(sequelize, Sequelize);
+db.User =user;
+db.Effect =effect;
 
-
+Object.keys(db).forEach(modelName =>{
+  db[modelName].init(sequelize);
+})
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

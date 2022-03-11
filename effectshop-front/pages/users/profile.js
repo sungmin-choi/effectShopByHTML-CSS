@@ -20,8 +20,8 @@ const Containner = styled.div`
 
 const LogOutBtn = styled(Button)`
   position: absolute;
-  right: 5px;
-  bottom: 3.5rem;
+  bottom: 0.5rem;
+  left: 1.2rem;
   background-color: red;
   border-color: red;
   color: white;
@@ -61,12 +61,7 @@ const Profile= () => {
       <h1 style={{fontSize:'32px'}}>내 프로필</h1>
       <Divider />
       <Card
-    style={{ width: '300px',marginBottom:'10px'}}
-    actions={[
-      <SettingOutlined key="setting" />,
-      <EditOutlined key="edit" />,
-      
-    ]}
+    style={{ width: '250px',marginBottom:'10px'}}
     >
     <Meta
       style={{height:'130px',padding:'20px'}}
