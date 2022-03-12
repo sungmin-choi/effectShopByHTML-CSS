@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {Effect,User} = require('../models');
 const {Op} = require('sequelize');
+
 router.get('/',async(req,res,next)=>{
     try {
         const where ={};

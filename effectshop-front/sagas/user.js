@@ -1,5 +1,5 @@
 import { all,fork,takeLatest,put,delay,call} from "@redux-saga/core/effects";
-import { LOG_IN_SUCCESS,LOG_IN_FAILURE,LOG_IN_REQUEST, GITHUB_REQUEST,
+import { LOG_IN_SUCCESS,LOG_IN_FAILURE,LOG_IN_REQUEST, 
         LOG_OUT_REQUEST,LOG_OUT_SUCCESS,LOG_OUT_FAILURE,
         SIGN_UP_REQUEST,SIGN_UP_SUCCESS,SIGN_UP_FAILURE,
         LOAD_MY_INFO_REQUEST,LOAD_MY_INFO_SUCCESS,LOAD_MY_INFO_FAILURE} from "../reducers/user";

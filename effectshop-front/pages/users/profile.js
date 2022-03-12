@@ -2,35 +2,17 @@ import React, { useCallback, useEffect} from 'react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { ProjectTitle } from '../../styles/loginStyle'
-import { Divider,Card, Avatar ,Button} from 'antd'
-import styled from 'styled-components'
+import { Divider,Card, Avatar } from 'antd'
 import { useRouter } from 'next/router'
 import { EditOutlined,SettingOutlined,LoadingOutlined} from '@ant-design/icons';
 import PostForm from '../../components/PostForm'
 import { LOG_OUT_REQUEST } from '../../reducers/user'
 import Items from '../../components/Items';
+import {Containner,LogOutBtn} from '../../styles/profileStyle'
+
 const { Meta } = Card;
 
-const Containner = styled.div`
-  padding-top: 4rem;
-  width: 90%;
-  margin:auto;
-  
-`
 
-const LogOutBtn = styled(Button)`
-  position: absolute;
-  bottom: 0.5rem;
-  left: 1.2rem;
-  background-color: red;
-  border-color: red;
-  color: white;
-  &:hover{
-  background-color: red;
-  border-color: red;
-  color: white;
-  }
-`
 
 const Profile= () => {
   const router = useRouter();

@@ -1,33 +1,15 @@
-import React,{useEffect}from 'react'
-import { useSelector,useDispatch } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import Head from 'next/head'
 import Link from 'next/link'
 import { ProjectTitle } from '../../styles/loginStyle'
 import { useRouter } from 'next/router'
 import { Divider } from 'antd'
-import styled from 'styled-components'
 import Highlighter from '../../components/Highlighter'
 import {LOAD_EFFECT_DETAIL_REQUEST} from '../../reducers/effect'
 import wrapper from '../../store/configureStore'
 import {END} from 'redux-saga';
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    .effect-container{
-      position: relative;
-      margin: 0;
-      padding: 0;
-      width: 930px;
-      height: 500px;
-      font-family: "Montsrrat" sans-serif;
-      ${(props)=>props.data.css}
-    }
-`
-const CodeContainer = styled.section`
-  width: 80%;
-  margin: auto;
-  padding-bottom: 20px;
-`
+import { Container,CodeContainer } from '../../styles/detailIdStyle'
 const Detail= () => {
   const {loadEffectDetailDone,
          loadEffectDetailError,

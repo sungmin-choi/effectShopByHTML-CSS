@@ -2,19 +2,7 @@ import React, { useCallback, useState } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {CopyTwoTone, CopyOutlined} from '@ant-design/icons';
-import styled from 'styled-components';
-
-
-const ClipboardWrapper = styled.div`
-  position: absolute;
-  right: 7px;
-  top:7px;
-  span{
-    display: block;
-    font-size: 2px;
-  }
-
-`
+import { ClipboardWrapper,Container } from '../styles/highlighterStyle';
 
 const Highlighter = ({code,language}) => {
   const [isCopied,setIsCopied] = useState(false);
@@ -24,7 +12,7 @@ const Highlighter = ({code,language}) => {
     setTimeout(() => {setIsCopied(false)}, 3000);
   },[])
   return (
-    <div style={{position:'relative'}}>
+    <Container>
     <ClipboardWrapper>
     <CopyToClipboard text={code} onCopy={onCopy}>
     {isCopied ? <CopyTwoTone style={{fontSize:'20px'}}/> : 
@@ -35,7 +23,7 @@ const Highlighter = ({code,language}) => {
     <SyntaxHighlighter language={language} >
       {code}
     </SyntaxHighlighter>
-    </div>
+    </Container>
   )
 }
 

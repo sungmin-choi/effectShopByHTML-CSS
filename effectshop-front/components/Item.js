@@ -1,73 +1,15 @@
 import React from 'react'
-import { Card,Tag ,Button} from 'antd';
+import { Tag } from 'antd';
 import { HeartFilled, HeartOutlined} from '@ant-design/icons';
 import Link from 'next/link';
-import styled from 'styled-components';
 import { useDispatch,useSelector } from 'react-redux';
 import {LIKE_EFFECT_REQUEST, REMOVE_EFFECTS_REQUEST, UNLIKE_EFFECT_REQUEST} from '../reducers/effect';
+import { HeartTag,DeleteBtn,EditBtn,UserInfo,EffectCard } from '../styles/itemStyle';
 
-const HeartTag = styled(Tag)`
-  cursor: pointer;
-`
-const DeleteBtn = styled(Button)`
-  background-color: red;
-  border-color: red;
-  color: white;
-  &:hover{
-  background-color: red;
-  border-color: red;
-  color: white;
-  }
-  position: absolute;
-  bottom: 5px;
-  left: 7px;
-`
-
-const EditBtn = styled(Button)`
-  position: absolute;
-  bottom: 5px;
-  left: 6rem;
-`
-
-const UserInfo = styled.div`
-  position: absolute;
-  right: 1.1rem;
-  bottom: 5px;
-  z-index: 10;
-  background-color: transparent;
-  border-radius: 10px;
-`
-const EffectCard = styled(Card)`
-    width: 600px;
-    height: 400px;
-    display: inline-block;
-    margin-top: 20px;
-    z-index: 0;
-    .effect-container{
-      position: relative;
-      margin: 0;
-      padding: 0;
-      height: 340px;
-      overflow-y: auto;
-      font-family: "Montsrrat" sans-serif;
-      ${(props)=>props.data.css}
-    }
-    @media (max-width:1300px){
-      &{
-      width: 700px;
-      height: 500px;
-        .effect-container{
-          height: 430px;
-        }
-      }
-    }
-`
 const Item = ({payload,edit}) => {
   const dispatch = useDispatch();
 
   const id = useSelector((state)=>state.user.me?.id);
-  const {likeEffectError,unLikeEffectError, mainEffects} = useSelector((state)=>state.effect);
-
   const unLikeEffect = () =>{
     dispatch({
       type: UNLIKE_EFFECT_REQUEST,

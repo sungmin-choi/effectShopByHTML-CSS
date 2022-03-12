@@ -1,42 +1,8 @@
 import React,{useState} from 'react';
-import {Form,Input,Button,Card} from 'antd';
-import styled from 'styled-components';
+import {Form,Input,Button} from 'antd';
 import { ADD_EFFECTS_REQUEST } from '../reducers/effect';
 import { useDispatch } from 'react-redux';
-
-
-const CustomForm = styled(Form)`
-  width: 45%;
-`
-
-const CustomCard = styled(Card)`
-  width: 600px;
-  height: 400px;
-  z-index: 0;
-  position: absolute;
-  top: 10rem;
-  right: 0rem;
-  .effect-container{
-      position: relative;
-      margin: 0;
-      padding: 0;
-      height: 340px;
-      overflow-y: auto;
-      font-family: "Montsrrat" sans-serif;
-      ${(props)=>props.data}
-  }
-  @media (max-width:1300px){
-      &{
-        width: 400px;
-      }
-  }
-  @media (max-width:800px){
-      &{
-        width: 300px;
-      }
-  }
-`
-
+import { CustomCard,CustomForm } from '../styles/postFormStyle';
 
 
 const PostForm = () => {
