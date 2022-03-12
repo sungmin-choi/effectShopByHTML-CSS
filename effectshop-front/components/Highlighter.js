@@ -3,7 +3,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {CopyTwoTone, CopyOutlined} from '@ant-design/icons';
 import { ClipboardWrapper,Container } from '../styles/highlighterStyle';
-
+import PropTypes from 'prop-types';
 const Highlighter = ({code,language}) => {
   const [isCopied,setIsCopied] = useState(false);
   
@@ -26,6 +26,12 @@ const Highlighter = ({code,language}) => {
     </Container>
   )
 }
+
+Highlighter.propTypes = {
+  code: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired
+}
+
 
 export default Highlighter
 
