@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Tag,Button,Card} from 'antd'
-
+import { screen } from "./styleConstant"; 
 export const HeartTag = styled(Tag)`
   cursor: pointer;
 `
@@ -53,6 +53,15 @@ export const EffectCard = styled(Card)`
       height: 500px;
         .effect-container{
           height: 430px;
+        }
+      }
+    }
+    @media (max-width: ${screen.mobile}px){
+      &{
+        width: 533px;
+        height: 388px;
+        .effect-container{
+          height: 330px;
         }
       }
     }

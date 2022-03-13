@@ -16,6 +16,9 @@ export const Container = styled.div`
     }
   }
   @media (max-width:${screen.mobile}px){
-    
+    &{
+      width: 460px;
+      justify-content: center;
+    }
   }
 `
