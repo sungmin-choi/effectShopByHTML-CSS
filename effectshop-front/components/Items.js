@@ -16,7 +16,8 @@ const Items = ({isProfile,effects}) => {
 }
 
 Items.prototype = {
-  isProfile: PropTypes.bool.isRequired
+  isProfile: PropTypes.bool.isRequired,
+  effects: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default Items

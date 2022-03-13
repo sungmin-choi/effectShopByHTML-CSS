@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useDispatch,useSelector } from 'react-redux';
 import {LIKE_EFFECT_REQUEST, REMOVE_EFFECTS_REQUEST, UNLIKE_EFFECT_REQUEST} from '../reducers/effect';
 import { HeartTag,DeleteBtn,EditBtn,UserInfo,EffectCard } from '../styles/itemStyle';
-
+import PropTypes from 'prop-types'
 const Item = ({payload,edit}) => {
   const dispatch = useDispatch();
 
@@ -52,6 +52,18 @@ const Item = ({payload,edit}) => {
             </>: null}
     </EffectCard>
   )
+}
+
+Item.prototype = {
+  edit: PropTypes.bool.isRequired,
+  payload: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    html:PropTypes.string,
+    css:PropTypes.string,
+    User: PropTypes.object,
+    Likers: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired
 }
 
 export default Item
