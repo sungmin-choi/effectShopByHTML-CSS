@@ -4,9 +4,27 @@ import { ADD_EFFECTS_REQUEST } from '../reducers/effect';
 import { useDispatch } from 'react-redux';
 import { CustomCard,CustomForm } from '../styles/postFormStyle';
 
+function isValidCss(code){
+  const bracket= [];
+  for(let i=0;i<code.length;i++){
+      if(code[i]==='{'){
+          bracket.push(code[i]);
+      }else if(code[i]==='}'){
+          if(bracket.length>0){
+              bracket.pop()
+          }else return false;
+      }else if(code[i]===']' || code[i]==='[' || code[i]===')' || code[i] === '('){
+          return false;
+      }
+  }
+  if(bracket.length===0) return true;
+  else return false;
+}
+
 
 const PostForm = () => {
   const [html,setHtml] = useState('');
+  const [trueCss,setTrueCss] = useState('');
   const [css,setCss] = useState('');
   const [title,setTitle] = useState('');
   const [, forceUpdate] = useState({});
@@ -24,6 +42,12 @@ const PostForm = () => {
   useEffect(() => {
     forceUpdate({});
   }, []);
+
+  useEffect(()=>{
+    if(isValidCss(css)){
+      setTrueCss(css);
+    }
+  },[css])
 
   const initialHtml = `<div class="body">
   <h1>여기안에서 테스트 해 주세요</h1>
@@ -53,6 +77,7 @@ const PostForm = () => {
     rules={[
       {
         required: true,
+        message: 'Please input html code',
       },
     ]}>
       <Input.TextArea style={{height:'300px'}} placeholder={initialHtml} value={html} onChange={(e)=>setHtml(e.target.value)}/>
@@ -63,24 +88,36 @@ const PostForm = () => {
     rules={[
       {
         required: true,
+        message: 'Please input css code',
+        validator: (_, value) =>
+       isValidCss(value) ? Promise.resolve() : Promise.reject(new Error('문법이 틀렷습니다')),
       },
     ]}>
       <Input.TextArea style={{height:'300px'}} value={css} onChange={(e)=>setCss(e.target.value)}/>
     </Form.Item>
-    <Form.Item >
-      <Button disabled={
-      !form.isFieldsTouched(true) ||
-      !!form.getFieldsError().filter(({ errors }) => errors.length).length
-    } type="primary" htmlType="submit">
-        생성하기
-      </Button>
+    <Form.Item shouldUpdate>
+      {()=>(
+        <Button disabled={
+          !form.isFieldsTouched(true) ||
+          !!form.getFieldsError().filter(({ errors }) => errors.length).length
+        } type="primary" htmlType="submit">
+            생성하기
+        </Button>
+      )
+      }
+
+
     </Form.Item>
   </CustomForm>
-  <CustomCard data={css} title = {title || `제목`} >
+  <CustomCard data={trueCss} title = {title || `제목`} >
   <div className="effect-container" dangerouslySetInnerHTML={{__html:html || initialHtml}}></div>
   </CustomCard>
   </div>
   )
 }
+
+
+
+
 
 export default PostForm
