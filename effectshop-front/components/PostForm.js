@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useMemo} from 'react';
 import {Form,Input,Button} from 'antd';
 import { ADD_EFFECTS_REQUEST } from '../reducers/effect';
 import { useDispatch } from 'react-redux';
@@ -43,7 +43,7 @@ const PostForm = () => {
     forceUpdate({});
   }, []);
 
-  useEffect(()=>{
+  useMemo(()=>{
     if(isValidCss(css)){
       setTrueCss(css);
     }

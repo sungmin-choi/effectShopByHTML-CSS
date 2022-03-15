@@ -37,9 +37,12 @@ app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-  origin:'http://localhost:3000',
+  origin:process.env.CLIENT_URL,
   credentials:true,
 }));
+app.get('/',(req,res)=>{
+  res.send('hello express');
+})
 app.use('/effects' ,effectsRouter);
 app.use('/effect',effectRouter);
 app.use('/user', userRouter);

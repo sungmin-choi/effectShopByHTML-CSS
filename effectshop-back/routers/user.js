@@ -40,7 +40,7 @@ router.post('/local',isNotLoggedIn, (req,res,next)=>{
 });
 
 router.get('/github',passport.authenticate('github'));
-router.get('/github/callback',passport.authenticate('github',{successRedirect:'http://localhost:3000'}));
+router.get('/github/callback',passport.authenticate('github',{successRedirect:process.env.CLIENT_URL}));
 
 
 router.post('/logout',isLoggedIn,(req,res,next)=>{
