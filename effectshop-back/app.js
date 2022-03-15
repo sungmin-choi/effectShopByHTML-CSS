@@ -11,6 +11,9 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const passport = require('passport');
 const passportConfig = require('./passport');
+const morgan = require('morgan');
+const hpp = require('hpp');
+const helmet = require('helmet');
 db.sequelize
 .sync()
 .then(() => {
@@ -30,6 +33,14 @@ app.use(
     secret:process.env.EFFECTSHOP_SECRET,
   })
 )
+if(process.env.NODE_ENV === 'production'){
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+}else{
+  app.use(morgan('dev'));
+}
+
 
 app.use(passport.initialize()); // 패스포트 설정 미들웨어에 추가.
 app.use(passport.session());
@@ -37,7 +48,7 @@ app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-  origin:process.env.CLIENT_URL,
+  origin:"http://localhost:3000",
   credentials:true,
 }));
 app.get('/',(req,res)=>{
