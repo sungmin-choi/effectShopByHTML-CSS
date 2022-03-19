@@ -35,7 +35,7 @@ app.use(
 )
 if(process.env.NODE_ENV === 'production'){
   app.use(morgan('combined'));
-  app.use(hpp());
+  app.use(hpp()); //보안에 도움되는 라이브러리
   app.use(helmet());
 }else{
   app.use(morgan('dev'));
