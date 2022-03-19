@@ -15,17 +15,9 @@ export const initialized = {
     loadMyInfoDone: false,
     loadMyInfoError:null,
     me:null,
-    signUpData:{},
-    loginData:{}
 }
 
-const dummyUser = {
-    nickname:'sungmin-choi',
-    email:'nameja306@naver.com',
-    id:'1',
-    Effects:[{id:'2',nickname:'sungmin-choi'},{id:'3',nickname:'sungmin-choi'},
-            {id:'4',nickname:'sungmin-choi'}]
-}
+
 
 export const GITHUB_REQUEST = 'GITHUB_REQUEST';
 
@@ -85,6 +77,7 @@ const reducer = (state = initialized, action)=>produce(state,(draft)=>{
             draft.logInError = null;
             break;
         case LOG_IN_SUCCESS:
+            console.log("action.data:",action.data);
             draft.logInDone=true;
             draft.logInLoading=false;
             draft.logInError = null;

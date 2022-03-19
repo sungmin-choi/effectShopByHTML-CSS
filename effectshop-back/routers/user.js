@@ -105,7 +105,4 @@ router.post('/', isNotLoggedIn,async(req,res,next)=>{
 });
 
 
-
-
-
 module.exports = router;
