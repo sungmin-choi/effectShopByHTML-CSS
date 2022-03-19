@@ -25,6 +25,12 @@ function Home() {
   },[likeEffectError,unLikeEffectError,searchEffectsError])
 
   useEffect(()=>{
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  },[])
+  
+  useEffect(()=>{
     const handleScroll = ()=>{
       const lastId = mainEffects[mainEffects.length-1]?.id; 
       if(window.scrollY+document.documentElement.clientHeight>document.documentElement.scrollHeight-100){
