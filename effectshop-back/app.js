@@ -31,6 +31,9 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret:process.env.EFFECTSHOP_SECRET,
+    cookie:{
+      secure:false
+    }
   })
 )
 if(process.env.NODE_ENV === 'production'){
