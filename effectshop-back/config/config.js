@@ -20,7 +20,7 @@ module.exports ={
   "production": {
     "username": "root",
     "password": process.env.DB_SECRET,
-    "database": "database_production",
+    "database": "effectShop",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
