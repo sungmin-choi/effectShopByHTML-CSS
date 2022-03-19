@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production next start -p 80",
     "lint": "next lint"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "@next/bundle-analyzer": "^12.1.0",
     "antd": "^4.18.6",
     "axios": "^0.26.0",
+    "cross-env": "^7.0.3",
     "immer": "^9.0.12",
     "next": "12.0.10",
     "next-redux-wrapper": "^7.0.5",
