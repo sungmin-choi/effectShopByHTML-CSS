@@ -32,7 +32,9 @@ app.use(
     resave: false,
     secret:process.env.EFFECTSHOP_SECRET,
     cookie:{
-      secure:false
+      httpOnly:true,
+      secure:false,
+      domain: process.env.NODE_ENV === 'production' && '.effectshop-htmlcss.ml'
     }
   })
 )
@@ -40,8 +42,16 @@ if(process.env.NODE_ENV === 'production'){
   app.use(morgan('combined'));
   app.use(hpp()); //보안에 도움되는 라이브러리
   app.use(helmet());
+  app.use(cors({
+    origin:"http://effectshop-htmlcss.ml",
+    credentials:true,
+  }));
 }else{
   app.use(morgan('dev'));
+  app.use(cors({
+    origin:true,
+    credentials:true,
+  }));
 }
 
 
@@ -50,10 +60,7 @@ app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cors({
-  origin:["http://localhost:3000","http://54.180.81.148"],
-  credentials:true,
-}));
+
 app.get('/',(req,res)=>{
   res.send('hello express');
 })
