@@ -50,9 +50,9 @@ export const EffectCard = styled(Card)`
     @media (max-width:1300px){
       &{
       width: 700px;
-      height: 500px;
+      height: 400px;
         .effect-container{
-          height: 430px;
+          height: 380px;
         }
       }
     }

@@ -43,7 +43,7 @@ if(process.env.NODE_ENV === 'production'){
   app.use(hpp()); //보안에 도움되는 라이브러리
   app.use(helmet());
   app.use(cors({
-    origin:"http://effectshop-htmlcss.ml",
+    origin:["http://effectshop-htmlcss.ml","http://www.effectshop-htmlcss.ml"],
     credentials:true,
   }));
 }else{
