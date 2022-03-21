@@ -32,13 +32,14 @@ app.use(
     resave: false,
     secret:process.env.EFFECTSHOP_SECRET,
     cookie:{
-      httpOnly:true,
-      secure:true,
-      domain: process.env.NODE_ENV === 'production' && '.effectshop-htmlcss.ml'
+      httpOnly:true, //script 로 쿠키 접근 불가.
+      secure:true, //https 일떄만 쿠키 공유
+      domain:'.effectshop-htmlcss.ml'
     }
   })
 )
 if(process.env.NODE_ENV === 'production'){
+  app.set('trust proxy', 1);
   app.use(morgan('combined'));
   app.use(hpp()); //보안에 도움되는 라이브러리
   app.use(helmet());
