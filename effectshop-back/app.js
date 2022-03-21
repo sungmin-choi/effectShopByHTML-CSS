@@ -33,13 +33,13 @@ app.use(
     secret:process.env.EFFECTSHOP_SECRET,
     cookie:{
       httpOnly:true, //script 로 쿠키 접근 불가.
-      secure:true, //https 일떄만 쿠키 공유
-      domain:'.effectshop-htmlcss.ml'
+      secure: process.env.NODE_ENV === 'production' && true, //https 일떄만 쿠키 공유
+      domain:process.env.NODE_ENV === 'production' && '.effectshop-htmlcss.ml'
     }
   })
 )
 if(process.env.NODE_ENV === 'production'){
-  app.set('trust proxy', 1);
+  app.set('trust proxy', 1); //프록시 뒤에 express 사용할 때 해줘야하는 설정.
   app.use(morgan('combined'));
   app.use(hpp()); //보안에 도움되는 라이브러리
   app.use(helmet());

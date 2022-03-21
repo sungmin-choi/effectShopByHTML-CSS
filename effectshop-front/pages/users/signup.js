@@ -18,6 +18,10 @@ const Signup = () => {
     forceUpdate({});
   }, []);
 
+
+  const githubLogin = () =>{
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/user/github`,'_self');
+  }
   useEffect(()=>{
     if(signUpDone){
       router.push('/');
@@ -48,7 +52,7 @@ const Signup = () => {
   <Link href="/"><a><ProjectTitle>Effect Shop By HTML&CSS</ProjectTitle></a></Link>
   <Container>
  <Title>회원가입</Title>
- <GithubBtn><GithubOutlined/>Github으로 계속하기</GithubBtn>
+ <GithubBtn onClick={githubLogin}><GithubOutlined/>Github으로 계속하기</GithubBtn>
    <Divider plain>또는</Divider>
   <Form
   form={form}

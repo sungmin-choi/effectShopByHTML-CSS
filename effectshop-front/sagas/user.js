@@ -13,7 +13,6 @@ function* logIn(action){//3
     try{
     const result = yield call(logInAPI,action.data);//call: 비동기에서 await 같은 개념이다.
     //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
-    console.log(result.data);
     yield put({
         type:LOG_IN_SUCCESS,
         data:result.data
@@ -75,7 +74,6 @@ function* loadUser(){//3
     try{
     const result = yield call(loadUserAPI);
     //yield delay(1000);  //백엔드 구축 안했을때 비동기 느낌 나기 위해서 1초딜레이 하고 실행.
-    console.log(result.data);
     yield put({
         type:LOAD_MY_INFO_SUCCESS,
         data:result.data
