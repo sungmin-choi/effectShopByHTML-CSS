@@ -3,7 +3,7 @@ import userSaga from './user';
 import effectSaga from './effect';
 import axios from 'axios';
 //"http://api.effectshop-htmlcss.ml"
-axios.defaults.baseURL = "http://api.effectshop-htmlcss.ml"
+axios.defaults.baseURL = "https://api.effectshop-htmlcss.ml"
 axios.defaults.withCredentials=true;
 export default function* rootSaga(){
     yield all([
