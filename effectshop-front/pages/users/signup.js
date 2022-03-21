@@ -20,7 +20,7 @@ const Signup = () => {
 
 
   const githubLogin = () =>{
-    window.open(`${process.env.NEXT_PUBLIC_API_URL}/user/github`,'_self');
+    window.open(`https://api.effectshop-htmlcss.ml/user/github`,'_self');
   }
   useEffect(()=>{
     if(signUpDone){

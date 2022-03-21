@@ -27,7 +27,7 @@ const Login = () => {
     },[me&&me.id,logInError]);
 
     const githubLogin = () =>{
-      window.open(`${process.env.NEXT_PUBLIC_API_URL}/user/github`,'_self');
+      window.open(`https://api.effectshop-htmlcss.ml/user/github`,'_self');
     }
     const onFinish = (values) => {
       const {email} = values;
