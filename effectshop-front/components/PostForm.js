@@ -21,9 +21,13 @@ function isValidCss(code){
           const curb = bracket.pop();
           if(curb !== '(') return false;
         }else return false;
-      }
-      else if(code[i]===']' || code[i]==='['){
-          return false;
+      }else if(code[i] === '['){
+        bracket.push(code[i]);
+      }else if(code[i] === ']'){
+        if(bracket.length>0){
+          const curb = bracket.pop();
+          if(curb !== '[') return false;
+        }else return false;
       }
   }
   if(bracket.length===0) return true;
