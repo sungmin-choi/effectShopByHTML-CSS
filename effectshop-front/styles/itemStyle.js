@@ -52,7 +52,7 @@ export const EffectCard = styled(Card)`
       width: 700px;
       height: 400px;
         .effect-container{
-          height: 380px;
+          height: 340px;
         }
       }
     }
